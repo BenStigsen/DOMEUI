@@ -152,9 +152,7 @@ class TextBox is Element {
         // TO-DO: Add support for space and other symbols
         if (entry.value.justPressed) {
           // TO-DO: Add uppercase/lowercase support
-          if (Keyboard.isKeyDown("CapsLock")) {
-            uppercase = true
-          }
+          uppercase = Keyboard.isKeyDown("CapsLock")
 
           if (Keyboard.isKeyDown("Left Shift")) {
             uppercase = !uppercase
