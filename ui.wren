@@ -2,7 +2,7 @@ import "math" for Vector
 import "graphics" for Canvas, Color
 import "input" for Mouse, Keyboard
 
-// Add padding
+// TO-DO: Add padding
 class Element {
   construct new(x, y) {
     init_(x, y, 0, 0)
@@ -17,33 +17,58 @@ class Element {
     _y = y
     _w = w
     _h = h
-    _hasFocus = false
+    _isFocused = false
+    _onMouseClick = null
+    _onKeyPress = null
   }
 
   update() {
+    // Focus
     if (Mouse["left"].justPressed) {
       var pos = Mouse.position
 
       if (pos.x > _x && pos.x < (_x + _w)) {
         if (pos.y > _y && pos.y < (_y + _h)) {
-          _hasFocus = true
+          _isFocused = true
+
+          if (_onMouseClick != null) {
+            _onMouseClick.call()
+          }
         } else {
-          _hasFocus = false
+          _isFocused = false
         }
       } else {
-        _hasFocus = false
+        _isFocused = false
       }
     }
+
+    if (_isFocused && (Keyboard.allPressed.count > 0)) {
+      if (_onKeyPress != null) {
+        _onKeyPress.call()
+      }
+    }
+  }
+
+  onMouseClick(fn) {
+    _onMouseClick = fn
+  }
+
+  onKeyPress(fn) {
+    _onKeyPress = fn
   }
 
   x {_x}
   y {_y}
   w {_w}
   h {_h}
-  hasFocus     {_hasFocus}
-  hasFocus=(v) {_hasFocus = v}
+  isFocused     {_isFocused}
+  isFocused=(v) {_isFocused = v}
+
+  onMouseClick {_onMouseClick}
+  onKeyPress   {_onKeyPress}
 }
 
+// Button
 class Button is Element {
   construct new(x, y) {
     super(x, y, 86, 25)
@@ -68,18 +93,13 @@ class Button is Element {
   init_(value, color) {
     _value = value
     _color = color
-    _onClick = null
   }
 
   update() {
     super.update()
 
-    if (hasFocus) {
-      hasFocus = false
-
-      if (_onClick != null) {
-        _onClick.call()
-      }
+    if (isFocused) {
+      isFocused = false
     }
   }
 
@@ -88,16 +108,13 @@ class Button is Element {
     Canvas.print(_value, x + 5, y + 5, _color)
   }
 
-  bind(fn) {
-    _onClick = fn
-  }
-
   value   {_value}
   color   {_color}
 
   value=(v) {_value = v}
 }
 
+// TextBox
 class TextBox is Element {
   construct new(value, x, y) {
     super(x, y)
@@ -122,22 +139,14 @@ class TextBox is Element {
   init_(value, color) {
     _value   = value
     _color   = color
-    _onInput = null
   }
 
   update() {
     super.update()
 
-    if (hasFocus) {
+    if (isFocused) {
       var uppercase = false
-
       var keys = Keyboard.allPressed
-
-      if (keys.count > 0) {
-        if (_onInput != null) {
-          _onInput.call()
-        }
-      }
 
       for (entry in keys) {
         // TO-DO: Add support for space and other symbols
@@ -162,10 +171,6 @@ class TextBox is Element {
     Canvas.print(_value, x + 5, y + 5, _color)
   }
 
-  onInput(fn) {
-    _onInput = fn
-  }
-
   value {_value}
   color {_color}
 
@@ -173,57 +178,5 @@ class TextBox is Element {
 }
 
 // TO-DO: Add multiline support
-class TextBoxMulti {
-  construct new() {
-    init_("", 0, 0, 200, 200, Color.rgb(255, 255, 255))
-  }
-
-  construct new(value, x, y, w, h, color) {
-    init_(value, x, y, w, h, color)
-  }
-
-  init_(value, x, y, w, h, color) {
-    _value = value
-    _x = x
-    _y = y
-    _w = w
-    _h = h
-    _color = color
-  }
-
-  update() {
-    var uppercase = false
-
-    for (entry in Keyboard.allPressed) {
-
-      // TO-DO: Add support for space and other symbols
-      if (entry.value.justPressed) {
-        // TO-DO: Add uppercase/lowercase support
-        if (Keyboard.isKeyDown("CapsLock")) {
-          uppercase = true
-        }
-
-        if (Keyboard.isKeyDown("Left Shift")) {
-          uppercase = !uppercase
-        }
-
-        _value = _value + entry.key
-      }
-    }
-  }
-
-  draw() {
-    Canvas.rect(_x, _y, _w, _h, _color)
-    Canvas.print(_value, _x + 5, _y + 5, _color)
-  }
-
-  value {_value}
-  x     {_x}
-  y     {_y}
-  w     {_w}
-  h     {_h}
-  color {_color}
-
-  value=(v) {_value = v}
-}
+//class TextBoxMulti {}
 
