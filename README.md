@@ -11,7 +11,10 @@ For easy game creation and fast prototyping (especially during game jams).
   - [ ] Padding
   - [ ] Disable widget
   - [ ] Binding
-    - [ ] onFocus
+    - [x] onFocusEnter
+    - [ ] onFocusExit
+    - [x] onMouseClick
+    - [ ] onKeyPress
 - [ ] Button **(IN-PROGRESS)**
   - [ ] Visual feedback
   - [ ] Text wrapping **(?)**
