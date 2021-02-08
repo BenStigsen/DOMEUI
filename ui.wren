@@ -18,8 +18,11 @@ class Element {
     _w = w
     _h = h
     _isFocused = false
+
+    _onFocusEnter = null
+    _onFocusExit  = null
     _onMouseClick = null
-    _onKeyPress = null
+    _onKeyPress   = null
   }
 
   update() {
@@ -31,9 +34,9 @@ class Element {
         if (pos.y > _y && pos.y < (_y + _h)) {
           _isFocused = true
 
-          if (_onMouseClick != null) {
-            _onMouseClick.call()
-          }
+          if (_onFocusEnter != null) {_onFocusEnter.call()}
+          if (_onMouseClick != null) {_onMouseClick.call()}
+
         } else {
           _isFocused = false
         }
@@ -43,19 +46,21 @@ class Element {
     }
 
     if (_isFocused && (Keyboard.allPressed.count > 0)) {
-      if (_onKeyPress != null) {
-        _onKeyPress.call()
-      }
+      if (_onKeyPress != null) {_onKeyPress.call()}
     }
   }
 
-  onMouseClick(fn) {
-    _onMouseClick = fn
-  }
+  // Bindings
+  onMouseClick(fn) {_onMouseClick = fn}
+  onKeyPress(fn)   {_onKeyPress   = fn}
+  onFocusEnter(fn) {_onFocusEnter = fn}
+  onFocusExit(fn)  {_onFocusExit  = fn}
 
-  onKeyPress(fn) {
-    _onKeyPress = fn
-  }
+  // Variables
+  onMouseClick {_onMouseClick}
+  onKeyPress   {_onKeyPress}
+  onFocusEnter {_onFocusEnter}
+  onFocusExit  {_onFocusExit}
 
   x {_x}
   y {_y}
@@ -63,9 +68,6 @@ class Element {
   h {_h}
   isFocused     {_isFocused}
   isFocused=(v) {_isFocused = v}
-
-  onMouseClick {_onMouseClick}
-  onKeyPress   {_onKeyPress}
 }
 
 // Button
