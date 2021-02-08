@@ -100,9 +100,7 @@ class Button is Element {
   update() {
     super.update()
 
-    if (isFocused) {
-      isFocused = false
-    }
+    if (isFocused) {isFocused = false}
   }
 
   draw() {
@@ -110,8 +108,8 @@ class Button is Element {
     Canvas.print(_value, x + 5, y + 5, _color)
   }
 
-  value   {_value}
-  color   {_color}
+  value {_value}
+  color {_color}
 
   value=(v) {_value = v}
 }
