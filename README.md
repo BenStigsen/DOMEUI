@@ -41,9 +41,27 @@ For easy game creation and fast prototyping (especially during game jams).
     - [ ] Special keys (capslock, shift, etc...)
   - [ ] Text wrapping
 - [ ] Dropdown **(?)**
+  - ...
+- [ ] Slider
+  - ...
+- [ ] Frame
+  - ...
+
+---
 
 ### General
 - [ ] Simplify value system
 - [ ] Simplify color system
 - [ ] Simplify clipping system
+
+---
+
+### Examples
+- [ ] Counter
+- [ ] Temperature Converter
+- [ ] Flight Booker
+- [ ] Timer
+- [ ] CRUD?
+- [ ] Circle Drawer?
+- [ ] Cells?
 
