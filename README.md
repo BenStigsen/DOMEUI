@@ -25,11 +25,13 @@ For easy game creation and fast prototyping (especially during game jams).
   - [ ] Visual feedback
 - [ ] TextBox **(IN-PROGRESS)**
   - [ ] Out-of-bounds clip
+  - [ ] Cursor
   - [ ] Input
     - [ ] Letters / Numbers
     - [ ] Symbols
     - [ ] Special keys (capslock, shift, etc...)
 - [ ] Multiline TextBox
+  - [ ] Cursor
   - [ ] Input
     - [ ] Letters / Numbers
     - [ ] Symbols
