@@ -18,6 +18,7 @@ class Element {
     _w = w
     _h = h
     _isFocused = false
+    _isEnabled = true
 
     _onFocusEnter = null
     _onFocusExit  = null
@@ -27,26 +28,28 @@ class Element {
 
   update() {
     // Focus
-    if (Mouse["left"].justPressed) {
-      var pos = Mouse.position
+    if (_isEnabled) {
+      if (Mouse["left"].justPressed) {
+        var pos = Mouse.position
 
-      if (pos.x > _x && pos.x < (_x + _w)) {
-        if (pos.y > _y && pos.y < (_y + _h)) {
-          _isFocused = true
+        if (pos.x > _x && pos.x < (_x + _w)) {
+          if (pos.y > _y && pos.y < (_y + _h)) {
+            _isFocused = true
 
-          if (_onFocusEnter != null) {_onFocusEnter.call()}
-          if (_onMouseClick != null) {_onMouseClick.call()}
+            if (_onFocusEnter != null) {_onFocusEnter.call()}
+            if (_onMouseClick != null) {_onMouseClick.call()}
 
+          } else {
+            _isFocused = false
+          }
         } else {
           _isFocused = false
         }
-      } else {
-        _isFocused = false
       }
-    }
 
-    if (_isFocused && (Keyboard.allPressed.count > 0)) {
-      if (_onKeyPress != null) {_onKeyPress.call()}
+      if (_isFocused && (Keyboard.allPressed.count > 0)) {
+        if (_onKeyPress != null) {_onKeyPress.call()}
+      }
     }
   }
 
@@ -67,7 +70,10 @@ class Element {
   w {_w}
   h {_h}
   isFocused     {_isFocused}
+  isEnabled     {_isEnabled}
+
   isFocused=(v) {_isFocused = v}
+  isEnabled=(v) {_isEnabled = v}
 }
 
 // Button
@@ -100,6 +106,7 @@ class Button is Element {
   update() {
     super.update()
 
+    // Button press
     if (isFocused) {isFocused = false}
   }
 
