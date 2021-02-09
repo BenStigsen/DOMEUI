@@ -15,16 +15,17 @@ For easy game creation and fast prototyping (especially during game jams).
     - [ ] onFocusExit
     - [x] ~~onMouseClick~~
     - [ ] onKeyPress
+- [x] ~~Label~~
 - [ ] Button **(IN-PROGRESS)**
   - [ ] Visual feedback
   - [ ] Text wrapping **(?)**
-  - [ ] Out-of-bounds clip
+  - [x] ~~Out-of-bounds clip~~
   - [ ] Input
 - [ ] Radio
   - [ ] Get selection
   - [ ] Visual feedback
 - [ ] TextBox **(IN-PROGRESS)**
-  - [ ] Out-of-bounds clip
+  - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
   - [ ] Input
     - [ ] Letters / Numbers
