@@ -28,12 +28,17 @@ class Element {
     _onFocusExit  = null
     _onMouseClick = null
     _onKeyPress   = null
+    _onVisible    = null
+    _onInvisible  = null
+    _onEnable     = null
+    _onDisable    = null
     _onUpdate     = null
     _onDraw       = null
   }
 
   update() {
-    if (_onUpdate != null) {_onUpdate.call()}
+    // Bind: onUpdate
+    if (_onUpdate) {_onUpdate.call()}
 
     if (_isEnabled && _isVisible) {
       // Mouse Click
@@ -42,35 +47,45 @@ class Element {
 
         if (pos.x > _x && pos.x < (_x + _w)) {
           if (pos.y > _y && pos.y < (_y + _h)) {
-            _isFocused = true
+            isFocused = true
 
-            if (_onFocusEnter != null) {_onFocusEnter.call()}
-            if (_onMouseClick != null) {_onMouseClick.call()}
+            // Bind: onMouseClick
+            if (_onMouseClick) {onMouseClick.call()}
 
           } else {
-            _isFocused = false
+            isFocused = false
           }
         } else {
-          _isFocused = false
+          isFocused = false
         }
       }
 
       // Keyboard Input
       if (_isFocused && (Keyboard.allPressed.count > 0)) {
-        if (_onKeyPress != null) {_onKeyPress.call()}
+        if (_onKeyPress) {_onKeyPress.call()}
       }
     }
   }
 
   draw() {
-    if (_onDraw != null) {_onDraw.call()}
+    if (_onDraw) {_onDraw.call()}
   }
+
+  // Properties
+  x {_x}
+  y {_y}
+  w {_w}
+  h {_h}
 
   // Bindings
   onMouseClick(fn) {_onMouseClick = fn}
   onKeyPress(fn)   {_onKeyPress   = fn}
   onFocusEnter(fn) {_onFocusEnter = fn}
   onFocusExit(fn)  {_onFocusExit  = fn}
+  onEnable(fn)     {_onEnable     = fn}
+  onDisable(fn)    {_onDisable     = fn}
+  onVisible(fn)    {_onVisible    = fn}
+  onInvisible(fn)  {_onInvisible  = fn}
   onUpdate(fn)     {_onUpdate     = fn}
   onDraw(fn)       {_onDraw       = fn}
 
@@ -79,20 +94,44 @@ class Element {
   onKeyPress   {_onKeyPress}
   onFocusEnter {_onFocusEnter}
   onFocusExit  {_onFocusExit}
+  onEnable     {_onEnable}
+  onDisable    {_onDisable}
+  onVisible    {_onVisible}
+  onInvisible  {_onInvisible}
   onUpdate     {_onUpdate}
   onDraw       {_onDraw}
 
-  x {_x}
-  y {_y}
-  w {_w}
-  h {_h}
+  // Booleans
   isFocused {_isFocused}
   isEnabled {_isEnabled}
   isVisible {_isVisible}
 
-  isFocused=(v) {_isFocused = v}
-  isEnabled=(v) {_isEnabled = v}
-  isVisible=(v) {_isVisible = v}
+  isFocused=(v) {
+    _isFocused = v
+    if (v) {
+      if (_onFocusEnter) {_onFocusEnter.call()}
+    } else {
+      if (_onFocusExit)  {_onFocusExit.call()}
+    }
+  }
+
+  isEnabled=(v) {
+    _isEnabled = v
+    if (v) {
+      if (_onEnable)  {_onEnable.call()}
+    } else {
+      if (_onDisable) {_onDisable.call()}
+    }
+  }
+
+  isVisible=(v) {
+    _isVisible = v
+    if (v) {
+      if (_onVisible)   {_onVisible.call()}
+    } else {
+      if (_onInvisible) {_onInvisible.call()}
+    }
+  }
 }
 
 class Label is Element {
