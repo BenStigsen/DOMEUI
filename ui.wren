@@ -112,6 +112,7 @@ class Label is Element {
   draw() {
     //super.update()
 
+    // Clip
     if (w > 0 && h > 0) {
       Canvas.clip(x, y, w, h)
       Canvas.print(_value, x, y, _color)
@@ -121,6 +122,7 @@ class Label is Element {
     }
   }
 
+  // Variables
   value {_value}
   color {_color}
 
@@ -160,6 +162,7 @@ class Button is Element {
     Canvas.clip()
   }
 
+  // Variables
   value {_value}
   color {_color}
 
@@ -220,6 +223,7 @@ class TextBox is Element {
     Canvas.clip()
   }
 
+  // Variables
   value {_value}
   color {_color}
 
