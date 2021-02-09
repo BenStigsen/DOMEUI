@@ -1,6 +1,42 @@
-// import "math" for Vector
 import "graphics" for Canvas, Color
 import "input" for Mouse, Keyboard
+
+class Rectangle {
+  construct new(x, y, w, h) {
+    init_(x, y, w, h)
+  }
+
+  init_(x, y, w, h) {
+    _x = x.round
+    _y = y.round
+    _w = w.round
+    _h = h.round
+  }
+
+  pointInRectangle(x, y) {
+    if (x > _x && x < (_x + _w)) {
+      if (y > _y && y < (_y + _h)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  toString {
+    return "(%(x), %(y), %(w), %(h))"
+  }
+
+  x {_x}
+  y {_y}
+  w {_w}
+  h {_h}
+
+  x=(v) {_x = v}
+  y=(v) {_y = v}
+  w=(v) {_w = v}
+  h=(v) {_h = v}
+}
 
 // TO-DO: Add padding
 class Element {
@@ -17,6 +53,8 @@ class Element {
     _y = y
     _w = w
     _h = h
+
+    _hitbox = Rectangle.new(_x, _y, _w, _h)
 
     _step = 0
 
@@ -51,16 +89,11 @@ class Element {
         if (Mouse["left"].justPressed) {
           var pos = Mouse.position
 
-          if (pos.x > _x && pos.x < (_x + _w)) {
-            if (pos.y > _y && pos.y < (_y + _h)) {
+          if (_hitbox.pointInRectangle(pos.x, pos.y)) {
               isFocused = true
 
               // Bind: onMouseClick
               if (_onMouseClick) {onMouseClick.call()}
-
-            } else {
-              isFocused = false
-            }
           } else {
             isFocused = false
           }
@@ -89,11 +122,12 @@ class Element {
   }
 
   // Properties
-  x {_x}
-  y {_y}
-  w {_w}
-  h {_h}
-  step {_step}
+  x      {_x}
+  y      {_y}
+  w      {_w}
+  h      {_h}
+  hitbox {_hitbox}
+  step   {_step}
 
   // Bindings
   onMouseClick(fn)    {_onMouseClick    = fn}
@@ -129,7 +163,8 @@ class Element {
   isVisible   {_isVisible}
   isAnimating {_isAnimating}
 
-  step=(v) {_step = v}
+  hitbox=(v) {_hitbox = v}
+  step=(v)   {_step   = v}
 
   isFocused=(v) {
     _isFocused = v
@@ -307,6 +342,55 @@ class TextBox is Element {
 
   value=(v) {_value = v}
   color=(v) {_color = v}
+}
+
+class Slider is Element {
+  construct new(min, max, inc, x, y, w, h) {
+    super(x, y, w, h)
+    init_(min, max, inc)
+  }
+
+  init_(min, max, inc) {
+    hitbox = Rectangle.new(x + ((x + w) / 2), (y + h) / 2, 10, 20)
+    _min = min
+    _max = max
+    _inc = inc
+    _value = ((min + max) / 2)
+    _color = Color.rgb(255, 50, 50)
+    _isDragging = false
+    _scale = (max - min) / ((x + w) - x)
+  }
+
+  update() {
+    super.update()
+
+    if (isFocused && !_isDragging) {
+      if (Mouse.isButtonPressed("left")) {
+        _isDragging = true
+      }
+    }
+
+    if (_isDragging) {
+      if (Mouse.isButtonPressed("left")) {
+        var pos = Mouse.position
+
+        if (pos.x > x && pos.x < (x + w)) {
+          hitbox.x = pos.x
+          _value = _min + _scale * (pos.x - x)
+        }
+      }
+    }
+  }
+
+  draw() {
+    super.draw()
+
+    Canvas.rect(x, y, w, h, _color)
+    Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
+  }
+
+  value     {_value}
+  value=(v) {_value = v}
 }
 
 // TO-DO: Add multiline support
