@@ -79,6 +79,50 @@ class Element {
   isEnabled=(v) {_isEnabled = v}
 }
 
+class Label is Element {
+  construct new(x, y) {
+    super(x, y, 0, 0)
+    init_("Label", Color.rgb(255, 255, 255))
+  }
+
+  construct new(value, x, y) {
+    super(x, y, 0, 0)
+    init_(value, Color.rgb(255, 255, 255))
+  }
+
+  construct new(x, y, w, h) {
+    super(x, y, w, h)
+    init_("Label", Color.rgb(255, 255, 255))
+  }
+
+  construct new(value, x, y, w, h) {
+    super(x, y, w, h)
+    init_(value, Color.rgb(255, 255, 255))
+  }
+
+  init_(value, color) {
+    _value = value
+    _color = color
+  }
+
+  //update() {super.update()}
+
+  draw() {
+    if (w > 0 && h > 0) {
+      Canvas.clip(x, y, w, h)
+      Canvas.print(_value, x, y)
+      Canvas.clip()
+    } else {
+      Canvas.print(_value, x, y, _color)
+    }
+  }
+
+  value {_value}
+  color {_color}
+
+  value=(v) {_value = v}
+}
+
 // Button
 class Button is Element {
   construct new(x, y) {
