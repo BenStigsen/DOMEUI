@@ -21,6 +21,7 @@ class Element {
     // Booleans
     _isFocused = false
     _isEnabled = true
+    _isVisible = true
 
     // Bindings
     _onFocusEnter = null
@@ -34,8 +35,7 @@ class Element {
   update() {
     if (_onUpdate != null) {_onUpdate.call()}
 
-    if (_isEnabled) {
-
+    if (_isEnabled && _isVisible) {
       // Mouse Click
       if (Mouse["left"].justPressed) {
         var pos = Mouse.position
@@ -88,9 +88,11 @@ class Element {
   h {_h}
   isFocused {_isFocused}
   isEnabled {_isEnabled}
+  isVisible {_isVisible}
 
   isFocused=(v) {_isFocused = v}
   isEnabled=(v) {_isEnabled = v}
+  isVisible=(v) {_isVisible = v}
 }
 
 class Label is Element {
@@ -112,15 +114,17 @@ class Label is Element {
   //update() {super.update()}
 
   draw() {
-    //super.update()
+    if (isVisible) {
+      //super.update()
 
-    // Clip
-    if (w > 0 && h > 0) {
-      Canvas.clip(x, y, w, h)
-      Canvas.print(_value, x, y, _color)
-      Canvas.clip()
-    } else {
-      Canvas.print(_value, x, y, _color)
+      // Clip
+      if (w > 0 && h > 0) {
+        Canvas.clip(x, y, w, h)
+        Canvas.print(_value, x, y, _color)
+        Canvas.clip()
+      } else {
+        Canvas.print(_value, x, y, _color)
+      }
     }
   }
 
@@ -156,12 +160,14 @@ class Button is Element {
   }
 
   draw() {
-    super.draw()
+    if (isVisible) {
+      super.draw()
 
-    Canvas.clip(x, y, w, h)
-    Canvas.rect(x, y, w, h, _color)
-    Canvas.print(_value, x + 5, y + 5, _color)
-    Canvas.clip()
+      Canvas.clip(x, y, w, h)
+      Canvas.rect(x, y, w, h, _color)
+      Canvas.print(_value, x + 5, y + 5, _color)
+      Canvas.clip()
+    }
   }
 
   // Variables
@@ -217,12 +223,14 @@ class TextBox is Element {
   }
 
   draw() {
-    super.draw()
+    if (isVisible) {
+      super.draw()
 
-    Canvas.clip(x, y, w, h)
-    Canvas.rect(x, y, w, h, _color)
-    Canvas.print(_value, x + 5, y + 5, _color)
-    Canvas.clip()
+      Canvas.clip(x, y, w, h)
+      Canvas.rect(x, y, w, h, _color)
+      Canvas.print(_value, x + 5, y + 5, _color)
+      Canvas.clip()
+    }
   }
 
   // Variables
