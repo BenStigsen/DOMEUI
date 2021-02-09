@@ -84,27 +84,17 @@ class Element {
   y {_y}
   w {_w}
   h {_h}
-  isFocused     {_isFocused}
-  isEnabled     {_isEnabled}
+  isFocused {_isFocused}
+  isEnabled {_isEnabled}
 
   isFocused=(v) {_isFocused = v}
   isEnabled=(v) {_isEnabled = v}
 }
 
 class Label is Element {
-  construct new(x, y) {
-    super(x, y, 0, 0)
-    init_("Label", Color.rgb(255, 255, 255))
-  }
-
   construct new(value, x, y) {
     super(x, y, 0, 0)
     init_(value, Color.rgb(255, 255, 255))
-  }
-
-  construct new(x, y, w, h) {
-    super(x, y, w, h)
-    init_("Label", Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
@@ -139,19 +129,9 @@ class Label is Element {
 
 // Button
 class Button is Element {
-  construct new(x, y) {
-    super(x, y, 86, 25)
-    init_("Button", Color.rgb(255, 255, 255))
-  }
-
   construct new(value, x, y) {
     super(x, y, 86, 25)
     init_(value, Color.rgb(255, 255, 255))
-  }
-
-  construct new(x, y, w, h) {
-    super(x, y, w, h)
-    init_("Button", Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
@@ -191,11 +171,6 @@ class TextBox is Element {
   construct new(value, x, y) {
     super(x, y)
     init_(value, Color.rgb(255, 255, 255))
-  }
-
-  construct new(x, y, w, h) {
-    super(x, y, w, h)
-    init_("", Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
