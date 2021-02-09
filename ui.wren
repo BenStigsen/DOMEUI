@@ -1,4 +1,4 @@
-import "math" for Vector
+// import "math" for Vector
 import "graphics" for Canvas, Color
 import "input" for Mouse, Keyboard
 
@@ -17,9 +17,12 @@ class Element {
     _y = y
     _w = w
     _h = h
+
+    // Booleans
     _isFocused = false
     _isEnabled = true
 
+    // Bindings
     _onFocusEnter = null
     _onFocusExit  = null
     _onMouseClick = null
