@@ -15,11 +15,15 @@ For easy game creation and fast prototyping (especially during game jams).
   - [x] ~~Disable widget~~
   - [ ] Binding
     - [x] ~~onFocusEnter~~
-    - [ ] onFocusExit
+    - [x] ~~onFocusExit~~
     - [x] ~~onMouseClick~~
     - [x] ~~onKeyPress~~
     - [x] ~~onUpdate~~
     - [x] ~~onDraw~~
+    - [x] ~~onVisible~~
+    - [x] ~~onInvisible~~
+    - [x] ~~onEnable~~
+    - [x] ~~onDisable~~
 - [x] ~~Label~~
 - [ ] Button **(IN-PROGRESS)**
   - [ ] Visual feedback
