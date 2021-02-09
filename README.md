@@ -11,6 +11,7 @@ For easy game creation and fast prototyping (especially during game jams).
 - [ ] Element **(IN-PROGRESS)** _(superclass to all UI elements)_
   - [ ] Focus
   - [ ] Padding
+  - [x] ~~Animation Support~~
   - [x] ~~Show / Hide~~
   - [x] ~~Disable widget~~
   - [ ] Binding
@@ -26,13 +27,11 @@ For easy game creation and fast prototyping (especially during game jams).
     - [x] ~~onDisable~~
 - [x] ~~Label~~
 - [ ] Button **(IN-PROGRESS)**
-  - [ ] Visual feedback
   - [ ] Text wrapping **(?)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Input
 - [ ] Radio
   - [ ] Get selection
-  - [ ] Visual feedback
 - [ ] TextBox **(IN-PROGRESS)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
