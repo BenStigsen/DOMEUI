@@ -174,6 +174,7 @@ class Label is Element {
   color {_color}
 
   value=(v) {_value = v}
+  color=(v) {_color = v}
 }
 
 // Button
@@ -216,6 +217,7 @@ class Button is Element {
   color {_color}
 
   value=(v) {_value = v}
+  color=(v) {_color = v}
 }
 
 // TextBox
@@ -279,6 +281,7 @@ class TextBox is Element {
   color {_color}
 
   value=(v) {_value = v}
+  color=(v) {_color = v}
 }
 
 // TO-DO: Add multiline support
