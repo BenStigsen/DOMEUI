@@ -17,6 +17,8 @@ For easy game creation and fast prototyping (especially during game jams).
     - [ ] onFocusExit
     - [x] ~~onMouseClick~~
     - [ ] onKeyPress
+    - [ ] onUpdate
+    - [ ] onDraw
 - [x] ~~Label~~
 - [ ] Button **(IN-PROGRESS)**
   - [ ] Visual feedback
