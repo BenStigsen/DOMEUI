@@ -46,9 +46,11 @@ For easy game creation and fast prototyping (especially during game jams).
     - [ ] Symbols
     - [ ] Special keys (capslock, shift, etc...)
   - [ ] Text wrapping
-- [ ] Dropdown **(?)**
-  - ...
 - [ ] Slider
+  - [ ] Increments
+  - [ ] Binding
+    - [ ] onDrag
+- [ ] Dropdown **(?)**
   - ...
 - [ ] Frame
   - ...
@@ -70,4 +72,5 @@ For easy game creation and fast prototyping (especially during game jams).
 - [ ] CRUD?
 - [ ] Circle Drawer?
 - [ ] Cells?
+- [ ] Animation
 
