@@ -27,9 +27,13 @@ class Element {
     _onFocusExit  = null
     _onMouseClick = null
     _onKeyPress   = null
+    _onUpdate     = null
+    _onDraw       = null
   }
 
   update() {
+    if (_onUpdate != null) {_onUpdate.call()}
+
     // Focus
     if (_isEnabled) {
       if (Mouse["left"].justPressed) {
@@ -56,17 +60,25 @@ class Element {
     }
   }
 
+  draw() {
+    if (_onDraw != null) {_onDraw.call()}
+  }
+
   // Bindings
   onMouseClick(fn) {_onMouseClick = fn}
   onKeyPress(fn)   {_onKeyPress   = fn}
   onFocusEnter(fn) {_onFocusEnter = fn}
   onFocusExit(fn)  {_onFocusExit  = fn}
+  onUpdate(fn)     {_onUpdate     = fn}
+  onDraw(fn)       {_onDraw       = fn}
 
   // Variables
   onMouseClick {_onMouseClick}
   onKeyPress   {_onKeyPress}
   onFocusEnter {_onFocusEnter}
   onFocusExit  {_onFocusExit}
+  onUpdate     {_onUpdate}
+  onDraw       {_onDraw}
 
   x {_x}
   y {_y}
@@ -108,6 +120,8 @@ class Label is Element {
   //update() {super.update()}
 
   draw() {
+    //super.update()
+
     if (w > 0 && h > 0) {
       Canvas.clip(x, y, w, h)
       Canvas.print(_value, x, y)
@@ -158,6 +172,8 @@ class Button is Element {
   }
 
   draw() {
+    super.draw()
+
     Canvas.clip(x, y, w, h)
     Canvas.rect(x, y, w, h, _color)
     Canvas.print(_value, x + 5, y + 5, _color)
@@ -221,6 +237,8 @@ class TextBox is Element {
   }
 
   draw() {
+    super.draw()
+
     Canvas.clip(x, y, w, h)
     Canvas.rect(x, y, w, h, _color)
     Canvas.print(_value, x + 5, y + 5, _color)
