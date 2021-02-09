@@ -114,7 +114,7 @@ class Label is Element {
 
     if (w > 0 && h > 0) {
       Canvas.clip(x, y, w, h)
-      Canvas.print(_value, x, y)
+      Canvas.print(_value, x, y, _color)
       Canvas.clip()
     } else {
       Canvas.print(_value, x, y, _color)
