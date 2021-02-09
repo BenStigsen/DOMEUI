@@ -11,6 +11,7 @@ For easy game creation and fast prototyping (especially during game jams).
 - [ ] Element **(IN-PROGRESS)** _(superclass to all UI elements)_
   - [ ] Focus
   - [ ] Padding
+  - [x] ~~Show / Hide~~
   - [x] ~~Disable widget~~
   - [ ] Binding
     - [x] ~~onFocusEnter~~
