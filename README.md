@@ -56,8 +56,8 @@ For easy game creation and fast prototyping (especially during game jams).
 
 ---
 
-### Examples
-- [ ] Counter
+### [Examples](./examples)
+- [x] ~~Counter~~
 - [ ] Temperature Converter
 - [ ] Flight Booker
 - [ ] Timer
