@@ -18,22 +18,27 @@ class Element {
     _w = w
     _h = h
 
+    _step = 0
+
     // Booleans
-    _isFocused = false
-    _isEnabled = true
-    _isVisible = true
+    _isFocused   = false
+    _isEnabled   = true
+    _isVisible   = true
+    _isAnimating = false
 
     // Bindings
-    _onFocusEnter = null
-    _onFocusExit  = null
-    _onMouseClick = null
-    _onKeyPress   = null
-    _onVisible    = null
-    _onInvisible  = null
-    _onEnable     = null
-    _onDisable    = null
-    _onUpdate     = null
-    _onDraw       = null
+    _onFocusEnter    = null
+    _onFocusExit     = null
+    _onMouseClick    = null
+    _onKeyPress      = null
+    _onVisible       = null
+    _onInvisible     = null
+    _onEnable        = null
+    _onDisable       = null
+    _onUpdate        = null
+    _onDraw          = null
+    _onAnimation     = null
+    _onAnimationDone = null
   }
 
   update() {
@@ -70,6 +75,16 @@ class Element {
   }
 
   draw() {
+    if (_isAnimating) {
+      if (_onAnimation && (_step > 0)) {
+        _onAnimation.call()
+        _step = _step - 1
+      } else {
+        _isAnimating = false
+        if (_onAnimationDone) {_onAnimationDone.call()}
+      }
+    }
+
     if (_onDraw) {_onDraw.call()}
   }
 
@@ -78,35 +93,43 @@ class Element {
   y {_y}
   w {_w}
   h {_h}
+  step {_step}
 
   // Bindings
-  onMouseClick(fn) {_onMouseClick = fn}
-  onKeyPress(fn)   {_onKeyPress   = fn}
-  onFocusEnter(fn) {_onFocusEnter = fn}
-  onFocusExit(fn)  {_onFocusExit  = fn}
-  onEnable(fn)     {_onEnable     = fn}
-  onDisable(fn)    {_onDisable     = fn}
-  onVisible(fn)    {_onVisible    = fn}
-  onInvisible(fn)  {_onInvisible  = fn}
-  onUpdate(fn)     {_onUpdate     = fn}
-  onDraw(fn)       {_onDraw       = fn}
+  onMouseClick(fn)    {_onMouseClick    = fn}
+  onKeyPress(fn)      {_onKeyPress      = fn}
+  onFocusEnter(fn)    {_onFocusEnter    = fn}
+  onFocusExit(fn)     {_onFocusExit     = fn}
+  onEnable(fn)        {_onEnable        = fn}
+  onDisable(fn)       {_onDisable       = fn}
+  onVisible(fn)       {_onVisible       = fn}
+  onInvisible(fn)     {_onInvisible     = fn}
+  onUpdate(fn)        {_onUpdate        = fn}
+  onDraw(fn)          {_onDraw          = fn}
+  onAnimation(fn)     {_onAnimation     = fn}
+  onAnimationDone(fn) {_onAnimationDone = fn}
 
   // Variables
-  onMouseClick {_onMouseClick}
-  onKeyPress   {_onKeyPress}
-  onFocusEnter {_onFocusEnter}
-  onFocusExit  {_onFocusExit}
-  onEnable     {_onEnable}
-  onDisable    {_onDisable}
-  onVisible    {_onVisible}
-  onInvisible  {_onInvisible}
-  onUpdate     {_onUpdate}
-  onDraw       {_onDraw}
+  onMouseClick    {_onMouseClick}
+  onKeyPress      {_onKeyPress}
+  onFocusEnter    {_onFocusEnter}
+  onFocusExit     {_onFocusExit}
+  onEnable        {_onEnable}
+  onDisable       {_onDisable}
+  onVisible       {_onVisible}
+  onInvisible     {_onInvisible}
+  onUpdate        {_onUpdate}
+  onDraw          {_onDraw}
+  onAnimation     {_onAnimation}
+  onAnimationDone {_onAnimationDone}
 
   // Booleans
-  isFocused {_isFocused}
-  isEnabled {_isEnabled}
-  isVisible {_isVisible}
+  isFocused   {_isFocused}
+  isEnabled   {_isEnabled}
+  isVisible   {_isVisible}
+  isAnimating {_isAnimating}
+
+  step=(v) {_step = v}
 
   isFocused=(v) {
     _isFocused = v
@@ -134,6 +157,8 @@ class Element {
       if (_onInvisible) {_onInvisible.call()}
     }
   }
+
+  isAnimating=(v) {_isAnimating = v}
 }
 
 class Label is Element {
@@ -238,8 +263,8 @@ class TextBox is Element {
   }
 
   init_(value, color) {
-    _value   = value
-    _color   = color
+    _value = value
+    _color = color
   }
 
   update() {
