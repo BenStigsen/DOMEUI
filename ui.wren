@@ -34,8 +34,9 @@ class Element {
   update() {
     if (_onUpdate != null) {_onUpdate.call()}
 
-    // Focus
     if (_isEnabled) {
+
+      // Mouse Click
       if (Mouse["left"].justPressed) {
         var pos = Mouse.position
 
@@ -54,6 +55,7 @@ class Element {
         }
       }
 
+      // Keyboard Input
       if (_isFocused && (Keyboard.allPressed.count > 0)) {
         if (_onKeyPress != null) {_onKeyPress.call()}
       }
