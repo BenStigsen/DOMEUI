@@ -38,31 +38,33 @@ class Element {
 
   update() {
     // Bind: onUpdate
-    if (_onUpdate) {_onUpdate.call()}
+    if (_isEnabled) {
+      if (_onUpdate) {_onUpdate.call()}
 
-    if (_isEnabled && _isVisible) {
-      // Mouse Click
-      if (Mouse["left"].justPressed) {
-        var pos = Mouse.position
+      if (_isVisible) {
+        // Mouse Click
+        if (Mouse["left"].justPressed) {
+          var pos = Mouse.position
 
-        if (pos.x > _x && pos.x < (_x + _w)) {
-          if (pos.y > _y && pos.y < (_y + _h)) {
-            isFocused = true
+          if (pos.x > _x && pos.x < (_x + _w)) {
+            if (pos.y > _y && pos.y < (_y + _h)) {
+              isFocused = true
 
-            // Bind: onMouseClick
-            if (_onMouseClick) {onMouseClick.call()}
+              // Bind: onMouseClick
+              if (_onMouseClick) {onMouseClick.call()}
 
+            } else {
+              isFocused = false
+            }
           } else {
             isFocused = false
           }
-        } else {
-          isFocused = false
         }
-      }
 
-      // Keyboard Input
-      if (_isFocused && (Keyboard.allPressed.count > 0)) {
-        if (_onKeyPress) {_onKeyPress.call()}
+        // Keyboard Input
+        if (_isFocused && (Keyboard.allPressed.count > 0)) {
+          if (_onKeyPress) {_onKeyPress.call()}
+        }
       }
     }
   }
