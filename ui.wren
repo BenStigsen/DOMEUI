@@ -114,8 +114,10 @@ class Button is Element {
   }
 
   draw() {
+    Canvas.clip(x, y, w, h)
     Canvas.rect(x, y, w, h, _color)
     Canvas.print(_value, x + 5, y + 5, _color)
+    Canvas.clip()
   }
 
   value {_value}
@@ -175,8 +177,10 @@ class TextBox is Element {
   }
 
   draw() {
+    Canvas.clip(x, y, w, h)
     Canvas.rect(x, y, w, h, _color)
     Canvas.print(_value, x + 5, y + 5, _color)
+    Canvas.clip()
   }
 
   value {_value}
