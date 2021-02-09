@@ -6,6 +6,8 @@ The goal of DOMEUI is to provide a very minimal and easy-to-use set of UI contro
 For easy game creation and fast prototyping (especially during game jams).
 
 ## To-Do
+
+### Specific
 - [ ] Element **(IN-PROGRESS)** _(superclass to all UI elements)_
   - [ ] Focus
   - [ ] Padding
@@ -39,4 +41,9 @@ For easy game creation and fast prototyping (especially during game jams).
     - [ ] Special keys (capslock, shift, etc...)
   - [ ] Text wrapping
 - [ ] Dropdown **(?)**
+
+### General
+- [ ] Simplify value system
+- [ ] Simplify color system
+- [ ] Simplify clipping system
 
