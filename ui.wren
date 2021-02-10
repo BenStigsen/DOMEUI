@@ -345,22 +345,20 @@ class TextBox is Element {
 }
 
 class Slider is Element {
-  construct new(min, max, inc, x, y, w, h) {
+  construct new(x, y, w, h) {
     super(x, y, w, h)
-    init_(min, max, inc)
+    init_()
   }
 
-  init_(min, max, inc) {
+  init_() {
     hitbox = Rectangle.new(x + ((x + w) / 2), (y + h) / 2, 10, 20)
-    _min = min
-    _max = max
-    _inc = inc
-    _value = ((min + max) / 2)
-    _color = Color.rgb(255, 50, 50)
-    _isDragging = false
-    _scale = (max - min) / ((x + w) - x)
 
     _w = w - hitbox.w
+
+    _value = (100 / 2)
+    _color = Color.rgb(255, 50, 50)
+    _isDragging = false
+    _scale = 100 / ((x + _w) - x)
   }
 
   update() {
@@ -377,7 +375,7 @@ class Slider is Element {
         var pos = Mouse.position
 
         hitbox.x = (pos.x).clamp(x, x + _w)
-        _value = (_min + _scale * (pos.x - x)).clamp(_min, _max)
+        _value = (_scale * (pos.x - x)).clamp(0, 100).round
       }
     }
   }
