@@ -356,10 +356,13 @@ class Slider is Element {
   }
 
   init_(hw, hh) {
-    _min = x - (hw / 2)
-    _max = x + (w - (hw / 2))
+    _minX = x - (hw / 2)
+    _maxX = (x + w) - (hw / 2)
 
-    hitbox.x = (_min + _max) / 2
+    _min  = 0
+    _max  = 100
+
+    hitbox.x = (_minX + _maxX) / 2
     hitbox.y = (y + (h / 2)) - (hh / 2)
     hitbox.w = hw
     hitbox.h = hh
@@ -367,7 +370,6 @@ class Slider is Element {
     _value = (100 / 2)
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
-    _scale = 100 / (_max - _min)
 
     _onDrag = null
   }
@@ -385,8 +387,8 @@ class Slider is Element {
       if (Mouse.isButtonPressed("left")) {
         var pos = Mouse.position
 
-        hitbox.x = (pos.x - (hitbox.w / 2)).clamp(_min, _max)
-        _value = (_scale * (pos.x - x)).clamp(0, 100).round
+        hitbox.x = (pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
+        _value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
         if (_onDrag) {_onDrag.call()}
       }
@@ -400,14 +402,34 @@ class Slider is Element {
     Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
   }
 
+  map(v, afrom, ato, bfrom, bto) {
+    return bfrom + ((v - afrom) * (bto - bfrom) / (ato - afrom))
+  }
+
   onDrag(fn) {_onDrag = fn}
 
   onDrag=(v) {
     _onDrag = fn
   }
 
-  value      {_value}
-  value=(v)  {_value = v}
+  min   {_min}
+  max   {_max}
+  value {_value}
+
+  min=(v) {
+    _value = map(_value, _max, _min, _max, v)
+    _min = v
+  }
+
+  max=(v) {
+    _value = map(_value, _max, _min, v, _min)
+    _max = v
+  }
+
+  value=(v) {
+    _value = v.clamp(_min, _max)
+    hitbox.x = (x - (hitbox.w / 2)) + (_value / (_max - _min)) * w
+  }
 }
 
 // TO-DO: Add multiline support
