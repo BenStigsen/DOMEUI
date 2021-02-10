@@ -49,6 +49,8 @@ Examples can be found **[here](./examples)**
   - [ ] Text wrapping
 - [ ] Slider
   - [ ] Increments
+  - [x] ~~Value scaling~~
+  - [x] ~~Min / Max range~~
   - [x] ~~Binding~~
     - [x] ~~onDrag~~
 - [ ] Dropdown **(?)**
