@@ -356,10 +356,13 @@ class Slider is Element {
   }
 
   init_(hw, hh) {
-    hitbox = Rectangle.new((x + ((x + w) / 2)) - (hw * 2), ((y + h) / 2), hw, hh)
+    _min = x - (hw / 2)
+    _max = x + (w - (hw / 2))
 
-    _min = x - (hitbox.w / 2)
-    _max = x + (w - (hitbox.w / 2))
+    hitbox.x = (_min + _max) / 2
+    hitbox.y = (y + (h / 2)) - (hh / 2)
+    hitbox.w = hw
+    hitbox.h = hh
 
     _value = (100 / 2)
     _color = Color.rgb(255, 50, 50)
