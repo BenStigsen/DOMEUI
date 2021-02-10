@@ -48,8 +48,8 @@ For easy game creation and fast prototyping (especially during game jams).
   - [ ] Text wrapping
 - [ ] Slider
   - [ ] Increments
-  - [ ] Binding
-    - [ ] onDrag
+  - [x] ~~Binding~~
+    - [x] ~~onDrag~~
 - [ ] Dropdown **(?)**
   - ...
 - [ ] Frame
@@ -58,6 +58,7 @@ For easy game creation and fast prototyping (especially during game jams).
 ---
 
 ### General
+- [ ] Add draw queue system
 - [ ] Simplify value system
 - [ ] Simplify color system
 - [ ] Simplify clipping system
