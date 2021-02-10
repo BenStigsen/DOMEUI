@@ -14,7 +14,7 @@ For easy game creation and fast prototyping (especially during game jams).
   - [x] ~~Animation Support~~
   - [x] ~~Show / Hide~~
   - [x] ~~Disable widget~~
-  - [ ] Binding
+  - [ ] Binding _(more might be added)_
     - [x] ~~onFocusEnter~~
     - [x] ~~onFocusExit~~
     - [x] ~~onMouseClick~~
@@ -26,10 +26,9 @@ For easy game creation and fast prototyping (especially during game jams).
     - [x] ~~onEnable~~
     - [x] ~~onDisable~~
 - [x] ~~Label~~
-- [ ] Button **(IN-PROGRESS)**
-  - [ ] Text wrapping **(?)**
+- [x] ~~Button~~
   - [x] ~~Out-of-bounds clip~~
-  - [ ] Input
+  - [x] ~~Input~~
 - [ ] Radio
   - [ ] Get selection
 - [ ] TextBox **(IN-PROGRESS)**
