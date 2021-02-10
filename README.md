@@ -5,6 +5,8 @@ Minimal UI library for the tiny game engine **[DOME](https://github.com/domeengi
 The goal of DOMEUI is to provide a very minimal and easy-to-use set of UI controls.
 For easy game creation and fast prototyping (especially during game jams).
 
+Examples can be found **[here](./examples)**
+
 ## To-Do
 
 ### Specific
