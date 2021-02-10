@@ -81,29 +81,25 @@ class Element {
 
   update() {
     // Bind: onUpdate
-    if (_isEnabled) {
-      if (_onUpdate) {_onUpdate.call()}
+    if (_onUpdate) {_onUpdate.call()}
 
-      if (_isVisible) {
-        // Mouse Click
-        if (Mouse["left"].justPressed) {
-          var pos = Mouse.position
+    // Mouse Click
+    if (Mouse["left"].justPressed) {
+      var pos = Mouse.position
 
-          if (_hitbox.pointInRectangle(pos.x, pos.y)) {
-              isFocused = true
+      if (_hitbox.pointInRectangle(pos.x, pos.y)) {
+          isFocused = true
 
-              // Bind: onMouseClick
-              if (_onMouseClick) {onMouseClick.call()}
-          } else {
-            isFocused = false
-          }
-        }
-
-        // Keyboard Input
-        if (_isFocused && (Keyboard.allPressed.count > 0)) {
-          if (_onKeyPress) {_onKeyPress.call()}
-        }
+          // Bind: onMouseClick
+          if (_onMouseClick) {onMouseClick.call()}
+      } else {
+        isFocused = false
       }
+    }
+
+    // Keyboard Input
+    if (_isFocused && (Keyboard.allPressed.count > 0)) {
+      if (_onKeyPress) {_onKeyPress.call()}
     }
   }
 
