@@ -395,9 +395,7 @@ class Slider is Element {
 
     if (_isDragging) {
       if (Mouse.isButtonPressed("left")) {
-        var pos = Mouse.position
-
-        hitbox.x = (pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
+        hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
         _value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
         if (_onDrag) {_onDrag.call()}
