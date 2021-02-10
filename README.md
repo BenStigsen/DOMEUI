@@ -62,6 +62,7 @@ Examples can be found **[here](./examples)**
 
 ### General
 - [ ] Add draw queue system
+- [ ] Add vector and list support
 - [ ] Simplify value system
 - [ ] Simplify color system
 - [ ] Simplify clipping system
