@@ -366,10 +366,8 @@ class Slider is Element {
   }
 
   init_(v, min, max, hw, hh) {
-    //_minX = x - (hw / 2)
     _minX = x
     _maxX = (x + w) - hw
-    //_maxX = (x + w) - (hw / 2)
 
     _min  = min
     _max  = max
