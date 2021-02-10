@@ -196,6 +196,47 @@ class Element {
   isAnimating=(v) {_isAnimating = v}
 }
 
+class Frame is Element {
+  construct new() {
+    super(0, 0, Canvas.width, Canvas.height)
+    init_()
+  }
+
+  construct new(x, y, w, h) {
+    super(x, y, w, h)
+    init_()
+  }
+
+  init_() {
+    _children = []
+  }
+
+  draw() {
+    super.draw()
+
+    Canvas.clip(x, y, w, h)
+    for (child in children) {
+      child.draw()
+    }
+    Canvas.clip()
+  }
+
+  update() {
+    super.update()
+
+    for (child in children) {
+      child.update()
+    }
+  }
+
+  add(v) {
+    children.add(v)
+  }
+
+  children     {_children}
+  children=(v) {_children}
+}
+
 class Label is Element {
   construct new(value, x, y) {
     super(x, y, 0, 0)
@@ -216,7 +257,7 @@ class Label is Element {
 
   draw() {
     if (isVisible) {
-      //super.update()
+      //super.draw()
 
       // Clip
       if (w > 0 && h > 0) {
