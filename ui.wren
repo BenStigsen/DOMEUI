@@ -347,27 +347,39 @@ class TextBox is Element {
 class Slider is Element {
   construct new(x, y, w, h) {
     super(x, y, w, h)
-    init_(10, 20)
+    init_(50, 0, 100, 10, 20)
   }
 
   construct new(x, y, w, h, hw, hh) {
     super(x, y, w, h)
-    init_(hw, hh)
+    init_(50, 0, 100, hw, hh)
   }
 
-  init_(hw, hh) {
-    _minX = x - (hw / 2)
-    _maxX = (x + w) - (hw / 2)
+  construct new(v, min, max, x, y, w, h) {
+    super(x, y, w, h)
+    init_(v, min, max, 10, 20)
+  }
 
-    _min  = 0
-    _max  = 100
+  construct new(v, min, max, x, y, w, h, hw, hh) {
+    super(x, y, w, h)
+    init_(v, min, max, hw, hh)
+  }
 
-    hitbox.x = (_minX + _maxX) / 2
+  init_(v, min, max, hw, hh) {
+    //_minX = x - (hw / 2)
+    _minX = x
+    _maxX = (x + w) - hw
+    //_maxX = (x + w) - (hw / 2)
+
+    _min  = min
+    _max  = max
+
+    hitbox.x = map(v, _min, _max, _minX, _maxX)
     hitbox.y = (y + (h / 2)) - (hh / 2)
     hitbox.w = hw
     hitbox.h = hh
 
-    _value = (100 / 2)
+    _value = v
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
 
