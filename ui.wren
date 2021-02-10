@@ -347,11 +347,16 @@ class TextBox is Element {
 class Slider is Element {
   construct new(x, y, w, h) {
     super(x, y, w, h)
-    init_()
+    init_(10, 20)
   }
 
-  init_() {
-    hitbox = Rectangle.new(x + ((x + w) / 2), (y + h) / 2, 10, 20)
+  construct new(x, y, w, h, hw, hh) {
+    super(x, y, w, h)
+    init_(hw, hh)
+  }
+
+  init_(hw, hh) {
+    hitbox = Rectangle.new(x + ((x + w) / 2), (y + h) / 2, hw, hh)
 
     _w = w - hitbox.w
 
