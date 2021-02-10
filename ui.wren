@@ -368,6 +368,8 @@ class Slider is Element {
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
     _scale = 100 / (_max - _min)
+
+    _onDrag = null
   }
 
   update() {
@@ -385,6 +387,8 @@ class Slider is Element {
 
         hitbox.x = (pos.x - (hitbox.w / 2)).clamp(_min, _max)
         _value = (_scale * (pos.x - x)).clamp(0, 100).round
+
+        if (_onDrag) {_onDrag.call()}
       }
     }
   }
@@ -396,8 +400,14 @@ class Slider is Element {
     Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
   }
 
-  value     {_value}
-  value=(v) {_value = v}
+  onDrag(fn) {_onDrag = fn}
+
+  onDrag=(v) {
+    _onDrag = fn
+  }
+
+  value      {_value}
+  value=(v)  {_value = v}
 }
 
 // TO-DO: Add multiline support
