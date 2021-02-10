@@ -443,3 +443,6 @@ class Slider is Element {
 // TO-DO: Add multiline support
 //class TextBoxMulti {}
 
+var Rect = Rectangle
+var Region = Rectangle
+
