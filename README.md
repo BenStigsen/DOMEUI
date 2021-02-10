@@ -27,6 +27,8 @@ Examples can be found **[here](./examples)**
     - [x] ~~onInvisible~~
     - [x] ~~onEnable~~
     - [x] ~~onDisable~~
+- [x] ~~Frame~~
+  - [x] ~~Children~~
 - [x] ~~Label~~
 - [x] ~~Button~~
   - [x] ~~Out-of-bounds clip~~
@@ -54,8 +56,6 @@ Examples can be found **[here](./examples)**
   - [x] ~~Binding~~
     - [x] ~~onDrag~~
 - [ ] Dropdown **(?)**
-  - ...
-- [ ] Frame
   - ...
 
 ---
