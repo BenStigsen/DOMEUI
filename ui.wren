@@ -356,14 +356,15 @@ class Slider is Element {
   }
 
   init_(hw, hh) {
-    hitbox = Rectangle.new(x + ((x + w) / 2), (y + h) / 2, hw, hh)
+    hitbox = Rectangle.new((x + ((x + w) / 2)) - (hw * 2), ((y + h) / 2), hw, hh)
 
-    _w = w - hitbox.w
+    _min = x - (hitbox.w / 2)
+    _max = x + (w - (hitbox.w / 2))
 
     _value = (100 / 2)
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
-    _scale = 100 / ((x + _w) - x)
+    _scale = 100 / (_max - _min)
   }
 
   update() {
@@ -379,7 +380,7 @@ class Slider is Element {
       if (Mouse.isButtonPressed("left")) {
         var pos = Mouse.position
 
-        hitbox.x = (pos.x).clamp(x, x + _w)
+        hitbox.x = (pos.x - (hitbox.w / 2)).clamp(_min, _max)
         _value = (_scale * (pos.x - x)).clamp(0, 100).round
       }
     }
