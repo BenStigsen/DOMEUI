@@ -359,6 +359,8 @@ class Slider is Element {
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
     _scale = (max - min) / ((x + w) - x)
+
+    _w = w - hitbox.w
   }
 
   update() {
@@ -374,10 +376,8 @@ class Slider is Element {
       if (Mouse.isButtonPressed("left")) {
         var pos = Mouse.position
 
-        if (pos.x > x && pos.x < (x + w)) {
-          hitbox.x = pos.x
-          _value = _min + _scale * (pos.x - x)
-        }
+        hitbox.x = (pos.x).clamp(x, x + _w)
+        _value = (_min + _scale * (pos.x - x)).clamp(_min, _max)
       }
     }
   }
