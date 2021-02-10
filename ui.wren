@@ -211,21 +211,25 @@ class Frame is Element {
     _children = []
   }
 
-  draw() {
-    super.draw()
+  update() {
+    if (isEnabled) {
+      super.update()
 
-    Canvas.clip(x, y, w, h)
-    for (child in children) {
-      child.draw()
+      for (child in children) {
+        child.update()
+      }
     }
-    Canvas.clip()
   }
 
-  update() {
-    super.update()
+  draw() {
+    if (isVisible) {
+      super.draw()
 
-    for (child in children) {
-      child.update()
+      Canvas.clip(x, y, w, h)
+      for (child in children) {
+        child.draw()
+      }
+      Canvas.clip()
     }
   }
 
@@ -296,10 +300,12 @@ class Button is Element {
   }
 
   update() {
-    super.update()
+    if (isEnabled) {
+      super.update()
 
-    // Button press
-    if (isFocused) {isFocused = false}
+      // Button press
+      if (isFocused) {isFocused = false}
+    }
   }
 
   draw() {
@@ -344,23 +350,25 @@ class TextBox is Element {
   }
 
   update() {
-    super.update()
+    if (isEnabled) {
+      super.update()
 
-    if (isFocused) {
-      var uppercase = false
-      var keys = Keyboard.allPressed
+      if (isFocused) {
+        var uppercase = false
+        var keys = Keyboard.allPressed
 
-      for (entry in keys) {
-        // TO-DO: Add support for space and other symbols
-        if (entry.value.justPressed) {
-          // TO-DO: Add uppercase/lowercase support
-          uppercase = Keyboard.isKeyDown("CapsLock")
+        for (entry in keys) {
+          // TO-DO: Add support for space and other symbols
+          if (entry.value.justPressed) {
+            // TO-DO: Add uppercase/lowercase support
+            uppercase = Keyboard.isKeyDown("CapsLock")
 
-          if (Keyboard.isKeyDown("Left Shift")) {
-            uppercase = !uppercase
+            if (Keyboard.isKeyDown("Left Shift")) {
+              uppercase = !uppercase
+            }
+
+            _value = _value + entry.key
           }
-
-          _value = _value + entry.key
         }
       }
     }
@@ -426,29 +434,33 @@ class Slider is Element {
   }
 
   update() {
-    super.update()
+    if (isEnabled) {
+      super.update()
 
-    if (isFocused && !_isDragging) {
-      if (Mouse.isButtonPressed("left")) {
-        _isDragging = true
+      if (isFocused && !_isDragging) {
+        if (Mouse.isButtonPressed("left")) {
+          _isDragging = true
+        }
       }
-    }
 
-    if (_isDragging) {
-      if (Mouse.isButtonPressed("left")) {
-        hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
-        _value = map(hitbox.x, _minX, _maxX, _min, _max).round
+      if (_isDragging) {
+        if (Mouse.isButtonPressed("left")) {
+          hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
+          _value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
-        if (_onDrag) {_onDrag.call()}
+          if (_onDrag) {_onDrag.call()}
+        }
       }
     }
   }
 
   draw() {
-    super.draw()
+    if (isVisible) {
+      super.draw()
 
-    Canvas.rect(x, y, w, h, _color)
-    Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
+      Canvas.rect(x, y, w, h, _color)
+      Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
+    }
   }
 
   map(v, afrom, ato, bfrom, bto) {
