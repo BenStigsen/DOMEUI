@@ -474,12 +474,12 @@ class Slider is Element {
   value {_value}
 
   min=(v) {
-    _value = map(_value, _max, _min, _max, v)
+    _value = map(hitbox.x, _minX, _maxX, v, _max).round
     _min = v
   }
 
   max=(v) {
-    _value = map(_value, _max, _min, v, _min)
+    _value = map(hitbox.x, _minX, _maxX, _min, v).round
     _max = v
   }
 
