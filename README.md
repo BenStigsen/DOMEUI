@@ -5,6 +5,8 @@ Minimal UI library for the tiny game engine **[DOME](https://github.com/domeengi
 The goal of DOMEUI is to provide a very minimal and easy-to-use set of UI controls.
 For easy game creation and fast prototyping (especially during game jams).
 
+DOMEUI examples use the **[monogram](https://datagoblin.itch.io/monogram)** font, but does work with other fonts.
+
 Examples can be found **[here](./examples)**
 
 ## To-Do
