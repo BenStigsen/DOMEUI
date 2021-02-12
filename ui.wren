@@ -493,6 +493,123 @@ class Slider is Element {
   }
 }
 
+class CheckBox is Element {
+  construct new(x, y) {
+    super(x, y, 30, 30)
+    init_(false, Color.white)
+  }
+
+  construct new(v, x, y) {
+    super(x, y, 30, 30)
+    init_(v, Color.white)
+  }
+
+  construct new(x, y, w, h) {
+    super(x, y, w, h)
+    init_(false, Color.white)
+  }
+
+  construct new(v, x, y, w, h) {
+    super(x, y, w, h)
+    init_(v, Color.white)
+  }
+
+  init_(v, c) {
+    _value = v
+    _color = c
+
+    onMouseClick {
+      _value = !_value
+    }
+  }
+
+  update() {
+    if (isEnabled) {
+      super.update()
+    }
+  }
+
+  draw() {
+    if (isVisible) {
+      super.draw()
+
+      Canvas.rect(x, y, w, h, _color)
+
+      if (_value) {
+        Canvas.rectfill(x + 3, y + 3, w - 6, h - 6, _color)
+      }
+    }
+  }
+
+  value {_value}
+  color {_color}
+
+  value=(v) {_value = v}
+  color=(v) {_color = v}
+}
+
+/*
+class RadioGroup {
+  construct new() {
+    init_()
+  }
+
+  init_() {
+    _children = []
+    _parent = null
+  }
+
+  add(v) {
+    v.parent = this
+    _children.add(v)
+  }
+}
+*/
+
+/*
+class RadioButton is Element {
+  construct new(v, x, y) {
+    super(x, y, 30, 30)
+    init_(v, Color.white)
+  }
+
+  init_(v, c) {
+    hitbox.x = x - (w / 2)
+    hitbox.y = y - (h / 2)
+    _value = v
+    _color = c
+
+    onMouseClick {
+      _value = !_value
+    }
+  }
+
+  update() {
+    if (isEnabled) {
+      super.update()
+    }
+  }
+
+  draw() {
+    if (isVisible) {
+      super.draw()
+
+      Canvas.circle(x, y, w / 2, _color)
+
+      if (_value) {
+        Canvas.circlefill(x, y, (w / 2) - 4, _color)
+      }
+    }
+  }
+
+  value {_value}
+  color {_color}
+
+  value=(v) {_value = v}
+  color=(v) {_color = v}
+}
+*/
+
 // TO-DO: Add multiline support
 //class TextBoxMulti {}
 
