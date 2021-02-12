@@ -548,28 +548,65 @@ class CheckBox is Element {
   color=(v) {_color = v}
 }
 
-/*
-class RadioGroup {
+class RadioGroup is Frame {
   construct new() {
-    init_()
+    super(0, 0, Canvas.width, Canvas.width)
   }
 
-  init_() {
-    _children = []
-    _parent = null
+  update() {
+    if (isEnabled) {
+      super.update()
+
+      for (child in children) {
+        child.update()
+      }
+    }
   }
 
-  add(v) {
-    v.parent = this
-    _children.add(v)
+  draw() {
+    if (isVisible) {
+      super.draw()
+
+      for (child in children) {
+        child.draw()
+      }
+    }
+  }
+
+  select(id) {
+    for (child in children) {
+      System.print("ID: %(child.id)")
+      if (child.id != id) {
+        child.value = false
+      } else {
+        child.value = true
+      }
+    }
+  }
+
+  selected {
+    for (child in children) {
+      if (child.value) {
+        return child.id
+      }
+    }
+    return null
   }
 }
-*/
 
-/*
 class RadioButton is Element {
+  construct new(x, y) {
+    super(x, y, 30, 30)
+    init_(false, Color.white)
+  }
+
   construct new(v, x, y) {
     super(x, y, 30, 30)
+    init_(v, Color.white)
+  }
+
+  construct new(v, x, y, r) {
+    super(x, y, r, r)
     init_(v, Color.white)
   }
 
@@ -579,8 +616,16 @@ class RadioButton is Element {
     _value = v
     _color = c
 
+    if (!__id) {
+      __id = 0
+    } else {
+      __id = __id + 1
+    }
+
+    _id = __id
+
     onMouseClick {
-      _value = !_value
+      parent.select(_id)
     }
   }
 
@@ -604,11 +649,11 @@ class RadioButton is Element {
 
   value {_value}
   color {_color}
+  id    {_id}
 
   value=(v) {_value = v}
   color=(v) {_color = v}
 }
-*/
 
 // TO-DO: Add multiline support
 //class TextBoxMulti {}
