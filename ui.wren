@@ -234,7 +234,7 @@ class Frame is Element {
 
   add(v) {
     v.parent = this
-    children.add(v)
+    _children.add(v)
   }
 
   children     {_children}
