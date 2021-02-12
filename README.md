@@ -35,8 +35,9 @@ Examples can be found **[here](./examples)**
 - [x] ~~Button~~
   - [x] ~~Out-of-bounds clip~~
   - [x] ~~Input~~
-- [ ] Radio
-  - [ ] Get selection
+- [x] ~~Checkbox~~
+- [x] ~~Radio~~
+  - [x] ~~Get selection~~
 - [ ] TextBox **(IN-PROGRESS)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
