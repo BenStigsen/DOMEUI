@@ -20,15 +20,11 @@ class Main {
     // Widgets
     var check = _check = CheckBox.new(30, 30)
     var label = _label = Label.new("Checked: %(check.value)", 70, 38)
-
-    check.onMouseClick {
-      check.value = !check.value
-      label.value = "Checked: %(_check.value)"
-    }
   }
 
   update() {
     _check.update()
+    _label.value = "Checked: %(_check.value)"
   }
 
   draw(dt) {
