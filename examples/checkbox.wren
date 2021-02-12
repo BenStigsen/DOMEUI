@@ -18,23 +18,23 @@ class Main {
     Canvas.font = "monogram"
 
     // Widgets
-    var radio = _radio = CheckBox.new(30, 30)
-    var label = _label = Label.new("Checked: %(radio.value)", 70, 38)
+    var check = _check = CheckBox.new(30, 30)
+    var label = _label = Label.new("Checked: %(check.value)", 70, 38)
 
-    radio.onMouseClick {
-      radio.value = !radio.value
-      label.value = "Checked: %(radio.value)"
+    check.onMouseClick {
+      check.value = !check.value
+      label.value = "Checked: %(_check.value)"
     }
   }
 
   update() {
-    _radio.update()
+    _check.update()
   }
 
   draw(dt) {
     Canvas.cls()
     _label.draw()
-    _radio.draw()
+    _check.draw()
   }
 }
 
