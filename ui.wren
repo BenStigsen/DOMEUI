@@ -1,16 +1,21 @@
 import "graphics" for Canvas, Color
 import "input" for Mouse, Keyboard
 
+/* TO-DO:
+ - Add max amount of characters to TextBox
+ - Add combobox
+*/
+
 class Rectangle {
   construct new(x, y, w, h) {
     init_(x, y, w, h)
   }
 
   init_(x, y, w, h) {
-    _x = x.round
-    _y = y.round
-    _w = w.round
-    _h = h.round
+    _x = x
+    _y = y
+    _w = w
+    _h = h
   }
 
   pointInRectangle(x, y) {
