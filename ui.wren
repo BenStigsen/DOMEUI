@@ -56,6 +56,7 @@ class Element {
 
     _hitbox = Rectangle.new(_x, _y, _w, _h)
 
+    _parent = null
     _step = 0
 
     // Booleans
@@ -123,6 +124,7 @@ class Element {
   w      {_w}
   h      {_h}
   hitbox {_hitbox}
+  parent {_parent}
   step   {_step}
 
   // Bindings
@@ -160,6 +162,7 @@ class Element {
   isAnimating {_isAnimating}
 
   hitbox=(v) {_hitbox = v}
+  parent=(v) {_parent = v}
   step=(v)   {_step   = v}
 
   isFocused=(v) {
@@ -230,6 +233,7 @@ class Frame is Element {
   }
 
   add(v) {
+    v.parent = this
     children.add(v)
   }
 
