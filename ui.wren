@@ -679,4 +679,7 @@ class RadioButton is Element {
 
 var Rect = Rectangle
 var Region = Rectangle
+var Btn = Button
+var Check = CheckBox
+var Radio = RadioButton
 
