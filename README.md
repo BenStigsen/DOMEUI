@@ -86,13 +86,15 @@ Examples can be found **[here](./examples)**
 - [ ] Slider
 - [ ] Dropdown
 
+---
+__The examples below are based on [7GUIs](https://eugenkiss.github.io/7guis/tasks/)__
 
 - [x] ~~Counter~~
 - [ ] Temperature Converter
 - [ ] Flight Booker
 - [ ] Timer
 - [ ] CRUD?
-- [ ] Circle Drawer?
+- [ ] Circle Drawer
 - [ ] Cells?
 - [ ] Animation
 
