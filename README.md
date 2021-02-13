@@ -38,22 +38,25 @@ Examples can be found **[here](./examples)**
 - [x] ~~Checkbox~~
 - [x] ~~Radio~~
   - [x] ~~Get selection~~
+  - [X] ~~Unique ID~~
 - [ ] TextBox **(IN-PROGRESS)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
+  - [ ] Max Length
   - [ ] Input
     - [ ] Letters / Numbers
     - [ ] Symbols
     - [ ] Special keys (capslock, shift, etc...)
 - [ ] Multiline TextBox
   - [ ] Cursor
+  - [ ] Max Length
   - [ ] Input
     - [ ] Letters / Numbers
     - [ ] Symbols
     - [ ] Special keys (capslock, shift, etc...)
   - [ ] Text wrapping
 - [ ] Slider
-  - [ ] Increments
+  - [ ] Increments / Decimal rounding
   - [x] ~~Value scaling~~
   - [x] ~~Min / Max range~~
   - [x] ~~Binding~~
@@ -73,6 +76,17 @@ Examples can be found **[here](./examples)**
 ---
 
 ### [Examples](./examples)
+- [x] ~~Frame~~
+- [ ] Label
+- [ ] Button
+- [x] ~~Checkbox~~
+- [x] ~~Radiobutton~~
+- [ ] TextBox
+- [ ] Multiline TextBox
+- [ ] Slider
+- [ ] Dropdown
+
+
 - [x] ~~Counter~~
 - [ ] Temperature Converter
 - [ ] Flight Booker
