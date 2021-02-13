@@ -242,6 +242,20 @@ class Frame is Element {
     _children.add(v)
   }
 
+  [i] {
+    if (i < _children.count) {
+      return _children[i]
+    } else {
+      return null
+    }
+  }
+
+  [i]=(v) {
+    if (i < _children.count) {
+      _children[i] = v
+    }
+  }
+
   children     {_children}
   children=(v) {_children}
 }
@@ -621,10 +635,10 @@ class RadioButton is Element {
     _value = v
     _color = c
 
-    if (!__id) {
-      __id = 0
-    } else {
+    if (__id) {
       __id = __id + 1
+    } else {
+      __id = 0
     }
 
     _id = __id
