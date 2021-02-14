@@ -24,8 +24,8 @@ class Main {
     var button = _button = Button.new("Count", 60, 15)
 
     button.onMouseClick {
-      label.value = count
       count = count + 1
+      label.value = count
     }
   }
 
