@@ -46,18 +46,28 @@ class Rectangle {
 // TO-DO: Add padding
 class Element {
   construct new(x, y) {
-    init_(x, y, 0, 0)
+    init_(null, x, y, 0, 0)
+  }
+
+  construct new(value, x, y) {
+    init_(value, x, y, 0, 0)
   }
 
   construct new(x, y, w, h) {
-    init_(x, y, w, h)
+    init_(null, x, y, w, h)
   }
 
-  init_(x, y, w, h) {
+  construct new(value, x, y, w, h) {
+    init_(value, x, y, w, h)
+  }
+
+  init_(value, x, y, w, h) {
     _x = x
     _y = y
     _w = w
     _h = h
+
+    _value = value
 
     _hitbox = Rectangle.new(_x, _y, _w, _h)
 
@@ -128,6 +138,7 @@ class Element {
   y      {_y}
   w      {_w}
   h      {_h}
+  value  {_value}
   hitbox {_hitbox}
   parent {_parent}
   step   {_step}
@@ -166,6 +177,7 @@ class Element {
   isVisible   {_isVisible}
   isAnimating {_isAnimating}
 
+  value=(v)  {_value  = v}
   hitbox=(v) {_hitbox = v}
   parent=(v) {_parent = v}
   step=(v)   {_step   = v}
@@ -262,17 +274,16 @@ class Frame is Element {
 
 class Label is Element {
   construct new(value, x, y) {
-    super(x, y, 0, 0)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y, 0, 0)
+    init_(Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
-    super(x, y, w, h)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y, w, h)
+    init_(Color.rgb(255, 255, 255))
   }
 
-  init_(value, color) {
-    _value = value
+  init_(color) {
     _color = color
   }
 
@@ -285,36 +296,32 @@ class Label is Element {
       // Clip
       if (w > 0 && h > 0) {
         Canvas.clip(x, y, w, h)
-        Canvas.print(_value, x, y, _color)
+        Canvas.print(value, x, y, _color)
         Canvas.clip()
       } else {
-        Canvas.print(_value, x, y, _color)
+        Canvas.print(value, x, y, _color)
       }
     }
   }
 
   // Variables
-  value {_value}
-  color {_color}
-
-  value=(v) {_value = v}
+  color     {_color}
   color=(v) {_color = v}
 }
 
 // Button
 class Button is Element {
   construct new(value, x, y) {
-    super(x, y, 86, 25)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y, 86, 25)
+    init_(Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
-    super(x, y, w, h)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y, w, h)
+    init_(Color.rgb(255, 255, 255))
   }
 
-  init_(value, color) {
-    _value = value
+  init_(color) {
     _color = color
   }
 
@@ -333,38 +340,34 @@ class Button is Element {
 
       Canvas.clip(x, y, w, h)
       Canvas.rect(x, y, w, h, _color)
-      Canvas.print(_value, x + 5, y + 5, _color)
+      Canvas.print(value, x + 5, y + 5, _color)
       Canvas.clip()
     }
   }
 
   // Variables
-  value {_value}
-  color {_color}
-
-  value=(v) {_value = v}
+  color     {_color}
   color=(v) {_color = v}
 }
 
 // TextBox
 class TextBox is Element {
   construct new(value, x, y) {
-    super(x, y)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y)
+    init_(Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h) {
-    super(x, y, w, h)
-    init_(value, Color.rgb(255, 255, 255))
+    super(value, x, y, w, h)
+    init_(Color.rgb(255, 255, 255))
   }
 
   construct new(value, x, y, w, h, color) {
-    super(x, y, w, h)
-    init_(value, color)
+    super(value, x, y, w, h)
+    init_(color)
   }
 
-  init_(value, color) {
-    _value = value
+  init_(color) {
     _color = color
   }
 
@@ -386,7 +389,7 @@ class TextBox is Element {
               uppercase = !uppercase
             }
 
-            _value = _value + entry.key
+            value = value + entry.key
           }
         }
       }
@@ -399,53 +402,50 @@ class TextBox is Element {
 
       Canvas.clip(x, y, w, h)
       Canvas.rect(x, y, w, h, _color)
-      Canvas.print(_value, x + 5, y + 5, _color)
+      Canvas.print(value, x + 5, y + 5, _color)
       Canvas.clip()
     }
   }
 
   // Variables
-  value {_value}
-  color {_color}
-
-  value=(v) {_value = v}
+  color     {_color}
   color=(v) {_color = v}
 }
 
+// TO-DO: Fix slider drag when mouse out of slider area
 class Slider is Element {
   construct new(x, y, w, h) {
-    super(x, y, w, h)
-    init_(50, 0, 100, 10, 20)
+    super(50, x, y, w, h)
+    init_(0, 100, 10, 20)
   }
 
   construct new(x, y, w, h, hw, hh) {
-    super(x, y, w, h)
-    init_(50, 0, 100, hw, hh)
+    super(50, x, y, w, h)
+    init_(0, 100, hw, hh)
   }
 
-  construct new(v, min, max, x, y, w, h) {
-    super(x, y, w, h)
-    init_(v, min, max, 10, 20)
+  construct new(value, min, max, x, y, w, h) {
+    super(value, x, y, w, h)
+    init_(min, max, 10, 20)
   }
 
-  construct new(v, min, max, x, y, w, h, hw, hh) {
-    super(x, y, w, h)
-    init_(v, min, max, hw, hh)
+  construct new(value, min, max, x, y, w, h, hw, hh) {
+    super(value, x, y, w, h)
+    init_(min, max, hw, hh)
   }
 
-  init_(v, min, max, hw, hh) {
+  init_(min, max, hw, hh) {
     _minX = x
     _maxX = (x + w) - hw
 
     _min  = min
     _max  = max
 
-    hitbox.x = map(v, _min, _max, _minX, _maxX)
+    hitbox.x = map(value, _min, _max, _minX, _maxX)
     hitbox.y = (y + (h / 2)) - (hh / 2)
     hitbox.w = hw
     hitbox.h = hh
 
-    _value = v
     _color = Color.rgb(255, 50, 50)
     _isDragging = false
 
@@ -465,7 +465,7 @@ class Slider is Element {
       if (_isDragging) {
         if (Mouse.isButtonPressed("left")) {
           hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
-          _value = map(hitbox.x, _minX, _maxX, _min, _max).round
+          value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
           if (_onDrag) {_onDrag.call()}
         }
@@ -494,51 +494,49 @@ class Slider is Element {
 
   min   {_min}
   max   {_max}
-  value {_value}
 
   min=(v) {
-    _value = map(hitbox.x, _minX, _maxX, v, _max).round
+    value = map(hitbox.x, _minX, _maxX, v, _max).round
     _min = v
   }
 
   max=(v) {
-    _value = map(hitbox.x, _minX, _maxX, _min, v).round
+    value = map(hitbox.x, _minX, _maxX, _min, v).round
     _max = v
   }
 
   value=(v) {
-    _value = v.clamp(_min, _max)
-    hitbox.x = (x - (hitbox.w / 2)) + (_value / (_max - _min)) * w
+    super.value = v.clamp(_min, _max)
+    hitbox.x = (x - (hitbox.w / 2)) + (value / (_max - _min)) * w
   }
 }
 
 class CheckBox is Element {
   construct new(x, y) {
-    super(x, y, 30, 30)
-    init_(false, Color.white)
+    super(false, x, y, 30, 30)
+    init_(Color.white)
   }
 
-  construct new(v, x, y) {
-    super(x, y, 30, 30)
-    init_(v, Color.white)
+  construct new(value, x, y) {
+    super(value, x, y, 30, 30)
+    init_(Color.white)
   }
 
   construct new(x, y, w, h) {
-    super(x, y, w, h)
-    init_(false, Color.white)
+    super(false, x, y, w, h)
+    init_(Color.white)
   }
 
-  construct new(v, x, y, w, h) {
-    super(x, y, w, h)
-    init_(v, Color.white)
+  construct new(value, x, y, w, h) {
+    super(value, x, y, w, h)
+    init_(Color.white)
   }
 
-  init_(v, c) {
-    _value = v
-    _color = c
+  init_(color) {
+    _color = color
 
     onMouseClick {
-      _value = !_value
+      value = !value
     }
   }
 
@@ -554,19 +552,17 @@ class CheckBox is Element {
 
       Canvas.rect(x, y, w, h, _color)
 
-      if (_value) {
+      if (value) {
         Canvas.rectfill(x + 3, y + 3, w - 6, h - 6, _color)
       }
     }
   }
 
-  value {_value}
-  color {_color}
-
-  value=(v) {_value = v}
+  color     {_color}
   color=(v) {_color = v}
 }
 
+// TO-DO: Add bind for selection change
 class RadioGroup is Frame {
   construct new() {
     super(0, 0, Canvas.width, Canvas.width)
@@ -615,25 +611,24 @@ class RadioGroup is Frame {
 
 class RadioButton is Element {
   construct new(x, y) {
-    super(x, y, 30, 30)
-    init_(false, Color.white)
+    super(false, x, y, 30, 30)
+    init_(Color.white)
   }
 
-  construct new(v, x, y) {
-    super(x, y, 30, 30)
-    init_(v, Color.white)
+  construct new(value, x, y) {
+    super(value, x, y, 30, 30)
+    init_(Color.white)
   }
 
-  construct new(v, x, y, r) {
-    super(x, y, r, r)
-    init_(v, Color.white)
+  construct new(value, x, y, r) {
+    super(value, x, y, r, r)
+    init_(Color.white)
   }
 
-  init_(v, c) {
+  init_(color) {
     hitbox.x = x - (w / 2)
     hitbox.y = y - (h / 2)
-    _value = v
-    _color = c
+    _color = color
 
     if (__id) {
       __id = __id + 1
@@ -660,17 +655,15 @@ class RadioButton is Element {
 
       Canvas.circle(x, y, w / 2, _color)
 
-      if (_value) {
+      if (value) {
         Canvas.circlefill(x, y, (w / 2) - 4, _color)
       }
     }
   }
 
-  value {_value}
   color {_color}
   id    {_id}
 
-  value=(v) {_value = v}
   color=(v) {_color = v}
 }
 
