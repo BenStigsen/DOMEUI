@@ -12,7 +12,7 @@ Examples can be found **[here](./examples)**
 ## To-Do
 
 ### Specific
-- [ ] Element **(IN-PROGRESS)** _(superclass to all UI elements)_
+- [ ] Element _(superclass to all UI elements)_
   - [ ] Focus
   - [ ] Padding
   - [x] ~~Animation Support~~
@@ -36,10 +36,12 @@ Examples can be found **[here](./examples)**
   - [x] ~~Out-of-bounds clip~~
   - [x] ~~Input~~
 - [x] ~~Checkbox~~
-- [x] ~~Radio~~
+- [ ] Radio
   - [x] ~~Get selection~~
   - [X] ~~Unique ID~~
-- [ ] TextBox **(IN-PROGRESS)**
+  - [ ] Binding
+    - [ ] onSelection
+- [ ] TextBox
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
   - [ ] Max Length
@@ -66,9 +68,9 @@ Examples can be found **[here](./examples)**
 
 ---
 
-### General
 - [ ] Add draw queue system
 - [ ] Add vector and list support
+- [ ] Add foreground and background colors
 - [ ] Simplify value system
 - [ ] Simplify color system
 - [ ] Simplify clipping system
@@ -85,6 +87,7 @@ Examples can be found **[here](./examples)**
 - [ ] Multiline TextBox
 - [ ] Slider
 - [ ] Dropdown
+- [ ] All Widgets
 
 ---
 __The examples below are based on [7GUIs](https://eugenkiss.github.io/7guis/tasks/)__
