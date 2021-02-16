@@ -184,15 +184,18 @@ class Element {
   isVisible   {_isVisible}
   isAnimating {_isAnimating}
 
-  value=(v)   {_value  = v}
-  hitbox=(v)  {_hitbox = v}
-  parent=(v)  {_parent = v}
-  step=(v)    {_step   = v}
+  value=(v)    {_value    = v}
+  hitbox=(v)   {_hitbox   = v}
+  parent=(v)   {_parent   = v}
+  step=(v)     {_step     = v}
+  paddingX=(v) {_paddingX = v}
+  paddingY=(v) {_paddingY = v}
 
   padding=(v) {
     _paddingX = v
     _paddingY = v
   }
+
 
   isFocused=(v) {
     _isFocused = v
