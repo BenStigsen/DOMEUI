@@ -62,6 +62,7 @@ class Element {
   }
 
   init_(value, x, y, w, h) {
+    // Values
     _x = x
     _y = y
     _w = w
@@ -70,6 +71,9 @@ class Element {
     _value = value
 
     _hitbox = Rectangle.new(_x, _y, _w, _h)
+
+    _paddingX = 5
+    _paddingY = 5
 
     _parent = null
     _step = 0
@@ -134,14 +138,17 @@ class Element {
   }
 
   // Properties
-  x      {_x}
-  y      {_y}
-  w      {_w}
-  h      {_h}
-  value  {_value}
-  hitbox {_hitbox}
-  parent {_parent}
-  step   {_step}
+  x        {_x}
+  y        {_y}
+  w        {_w}
+  h        {_h}
+  value    {_value}
+  hitbox   {_hitbox}
+  padding  {_paddingX}
+  paddingX {_paddingX}
+  paddingY {_paddingY}
+  parent   {_parent}
+  step     {_step}
 
   // Bindings
   onMouseClick(fn)    {_onMouseClick    = fn}
@@ -177,10 +184,15 @@ class Element {
   isVisible   {_isVisible}
   isAnimating {_isAnimating}
 
-  value=(v)  {_value  = v}
-  hitbox=(v) {_hitbox = v}
-  parent=(v) {_parent = v}
-  step=(v)   {_step   = v}
+  value=(v)   {_value  = v}
+  hitbox=(v)  {_hitbox = v}
+  parent=(v)  {_parent = v}
+  step=(v)    {_step   = v}
+
+  padding=(v) {
+    _paddingX = v
+    _paddingY = v
+  }
 
   isFocused=(v) {
     _isFocused = v
@@ -340,7 +352,7 @@ class Button is Element {
 
       Canvas.clip(x, y, w, h)
       Canvas.rect(x, y, w, h, _color)
-      Canvas.print(value, x + 5, y + 5, _color)
+      Canvas.print(value, x + paddingX, y + paddingY, _color)
       Canvas.clip()
     }
   }
@@ -402,7 +414,7 @@ class TextBox is Element {
 
       Canvas.clip(x, y, w, h)
       Canvas.rect(x, y, w, h, _color)
-      Canvas.print(value, x + 5, y + 5, _color)
+      Canvas.print(value, x + paddingX, y + paddingY, _color)
       Canvas.clip()
     }
   }
@@ -553,13 +565,13 @@ class CheckBox is Element {
       Canvas.rect(x, y, w, h, _color)
 
       if (value) {
-        Canvas.rectfill(x + 3, y + 3, w - 6, h - 6, _color)
+        Canvas.rectfill(x + paddingX, y + paddingY, w - (paddingX * 2), h - (paddingY * 2), _color)
       }
     }
   }
 
-  color     {_color}
-  color=(v) {_color = v}
+  color       {_color}
+  color=(v)   {_color = v}
 }
 
 // TO-DO: Add bind for selection change
@@ -656,7 +668,7 @@ class RadioButton is Element {
       Canvas.circle(x, y, w / 2, _color)
 
       if (value) {
-        Canvas.circlefill(x, y, (w / 2) - 4, _color)
+        Canvas.circlefill(x, y, (w / 2) - paddingX, _color)
       }
     }
   }
