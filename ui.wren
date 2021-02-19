@@ -652,7 +652,13 @@ class RadioButton is Element {
 
     _id = __id
 
+    _onSelection = null
+
     onMouseClick {
+      if (!value && _onSelection) {
+        _onSelection.call()
+      }
+
       parent.select(_id)
     }
   }
@@ -675,11 +681,61 @@ class RadioButton is Element {
     }
   }
 
+  onSelection(fn) {_onSelection = fn}
+  onSelection     {_onSelection}
+
   color {_color}
   id    {_id}
 
   color=(v) {_color = v}
 }
+
+/*
+// MAYBE DROPDOWN SHOULD BE A FRAME FOR CHILDREN??
+class Dropdown is Element {
+  construct new(x, y, w, h) {
+    super(x, y, w, h)
+    init_("", [])
+  }
+
+  init_() {
+    _extended = false
+    _options  = []      // Buttons?
+  }
+
+  update() {
+    if (isEnabled) {
+      super.update()
+    }
+  }
+
+  draw() {
+    if (isVisible) {
+      super.draw()
+
+      // Draw dropdown (extended / !extended)
+      if (_extended) {
+
+      } else {
+
+      }
+    }
+  }
+
+  [i] {
+    if (i < _options.count) {
+      return _options.count[i]
+    }
+  }
+
+  selected {value}
+  extended {_extended}
+  options  {_options}
+
+  extended=(v) {_extended = v}
+  options=(v)  {_options = v}
+}
+*/
 
 // TO-DO: Add multiline support
 //class TextBoxMulti {}
