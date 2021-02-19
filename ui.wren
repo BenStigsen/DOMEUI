@@ -650,12 +650,9 @@ class RadioButton is Element {
     _onSelection = null
 
     onMouseClick {
-      if (!value && _onSelection) {
-        _onSelection.call()
-      }
-
-      if (parent && _id) {
-        parent.select(_id)
+      if (!value) { // Only trigger functions when not selected
+         if (_onSelection)  {_onSelection.call()}
+         if (parent && _id) {parent.select(_id)}
       }
     }
   }
