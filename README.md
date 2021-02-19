@@ -42,7 +42,7 @@ Examples can be found **[here](./examples)**
 - [x] ~~RadioGroup~~
   - [x] ~~Binding~~
     - [x] ~~onSelect~~
-- [x] ~~Radio~~
+- [x] ~~RadioButton~~
   - [x] ~~Get selection~~
   - [X] ~~Unique ID~~
   - [x] ~~Binding~~
