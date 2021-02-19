@@ -39,11 +39,15 @@ Examples can be found **[here](./examples)**
   - [x] ~~Out-of-bounds clip~~
   - [x] ~~Input~~
 - [x] ~~Checkbox~~
-- [ ] Radio
+- [x] ~~RadioGroup~~
+  - [x] ~~Binding~~
+    - [x] ~~onSelect~~
+- [x] ~~Radio~~
   - [x] ~~Get selection~~
   - [X] ~~Unique ID~~
-  - [ ] Binding
-    - [ ] onSelection
+  - [x] ~~Binding~~
+    - [x] ~~onSelect~~
+    - [x] ~~onDeselect~~
 - [ ] TextBox
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
