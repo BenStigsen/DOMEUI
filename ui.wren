@@ -604,12 +604,7 @@ class RadioGroup is Frame {
 
   select(id) {
     for (child in children) {
-      System.print("ID: %(child.id)")
-      if (child.id != id) {
-        child.value = false
-      } else {
-        child.value = true
-      }
+      child.value = (child.id == id)
     }
   }
 
