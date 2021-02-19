@@ -301,7 +301,7 @@ class Label is Element {
     _color = color
   }
 
-  //update() {super.update()}
+  update() {super.update()}
 
   draw() {
     if (isVisible) {
