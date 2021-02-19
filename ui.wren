@@ -579,6 +579,7 @@ class CheckBox is Element {
 class RadioGroup is Frame {
   construct new() {
     super(0, 0, Canvas.width, Canvas.width)
+    _onSelect = null
   }
 
   update() {
@@ -602,6 +603,8 @@ class RadioGroup is Frame {
   }
 
   select(id) {
+    if (_onSelect) {_onSelect.call()}
+
     for (child in children) {
       if (child.id == id) {
         child.value = true
@@ -622,6 +625,9 @@ class RadioGroup is Frame {
     }
     return null
   }
+
+  onSelect(fn) {_onSelect = fn}
+  onSelect     {_onSelect}
 }
 
 class RadioButton is Element {
@@ -658,8 +664,8 @@ class RadioButton is Element {
 
     onMouseClick {
       if (!value) { // Only trigger functions when not selected
-         if (_onSelect)     {_onSelect.call()}
          if (parent && _id) {parent.select(_id)}
+         if (_onSelect)     {_onSelect.call()}
       }
     }
   }
@@ -686,8 +692,6 @@ class RadioButton is Element {
 
   onSelect       {_onSelect}
   onDeselect     {_onDeselect}
-
-
 
   color {_color}
   id    {_id}
