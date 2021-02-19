@@ -604,7 +604,15 @@ class RadioGroup is Frame {
 
   select(id) {
     for (child in children) {
-      child.value = (child.id == id)
+      if (child.id == id) {
+        child.value = true
+      } else {
+        if (child.value && child.onDeselect) {
+          child.onDeselect.call()
+          System.print("Yeah")
+        }
+        child.value = false
+      }
     }
   }
 
@@ -647,11 +655,12 @@ class RadioButton is Element {
 
     _id = __id
 
-    _onSelection = null
+    _onSelect = null
+    _onDeselect = null
 
     onMouseClick {
       if (!value) { // Only trigger functions when not selected
-         if (_onSelection)  {_onSelection.call()}
+         if (_onSelect)     {_onSelect.call()}
          if (parent && _id) {parent.select(_id)}
       }
     }
@@ -666,7 +675,6 @@ class RadioButton is Element {
   draw() {
     if (isVisible) {
       super.draw()
-
       Canvas.circle(x, y, w / 2, _color)
 
       if (value) {
@@ -675,8 +683,13 @@ class RadioButton is Element {
     }
   }
 
-  onSelection(fn) {_onSelection = fn}
-  onSelection     {_onSelection}
+  onSelect(fn)   {_onSelect = fn}
+  onDeselect(fn) {_onDeselect = fn}
+
+  onSelect       {_onSelect}
+  onDeselect     {_onDeselect}
+
+
 
   color {_color}
   id    {_id}
