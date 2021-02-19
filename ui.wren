@@ -608,7 +608,6 @@ class RadioGroup is Frame {
       } else {
         if (child.value && child.onDeselect) {
           child.onDeselect.call()
-          System.print("Yeah")
         }
         child.value = false
       }
