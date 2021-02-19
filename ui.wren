@@ -271,9 +271,8 @@ class Frame is Element {
   [i] {
     if (i < _children.count) {
       return _children[i]
-    } else {
-      return null
     }
+    return null
   }
 
   [i]=(v) {
@@ -452,8 +451,8 @@ class Slider is Element {
     _minX = x
     _maxX = (x + w) - hw
 
-    _min  = min
-    _max  = max
+    _min = min
+    _max = max
 
     hitbox.x = map(value, _min, _max, _minX, _maxX)
     hitbox.y = (y + (h / 2)) - (hh / 2)
@@ -506,8 +505,8 @@ class Slider is Element {
     _onDrag = fn
   }
 
-  min   {_min}
-  max   {_max}
+  min {_min}
+  max {_max}
 
   min=(v) {
     value = map(hitbox.x, _minX, _maxX, v, _max).round
