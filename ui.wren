@@ -659,7 +659,9 @@ class RadioButton is Element {
         _onSelection.call()
       }
 
-      parent.select(_id)
+      if (parent && _id) {
+        parent.select(_id)
+      }
     }
   }
 
