@@ -14,7 +14,7 @@ Examples can be found **[here](./examples)**
 ### Specific
 - [ ] Element _(superclass to all UI elements)_
   - [ ] Focus
-  - [ ] Padding
+  - [x] ~~Padding~~
   - [x] ~~Animation Support~~
   - [x] ~~Show / Hide~~
   - [x] ~~Disable widget~~
@@ -74,6 +74,10 @@ Examples can be found **[here](./examples)**
 - [ ] Simplify value system
 - [ ] Simplify color system
 - [ ] Simplify clipping system
+
+---
+
+- [ ] Add documentation
 
 ---
 

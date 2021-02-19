@@ -72,8 +72,8 @@ class Element {
 
     _hitbox = Rectangle.new(_x, _y, _w, _h)
 
-    _paddingX = 5
-    _paddingY = 5
+    _paddingX = 5.min(w)
+    _paddingY = 5.min(h)
 
     _parent = null
     _step = 0
@@ -188,14 +188,13 @@ class Element {
   hitbox=(v)   {_hitbox   = v}
   parent=(v)   {_parent   = v}
   step=(v)     {_step     = v}
-  paddingX=(v) {_paddingX = v}
-  paddingY=(v) {_paddingY = v}
+  paddingX=(v) {_paddingX = v.min(w)}
+  paddingY=(v) {_paddingY = v.min(h)}
 
   padding=(v) {
     _paddingX = v
     _paddingY = v
   }
-
 
   isFocused=(v) {
     _isFocused = v
