@@ -288,12 +288,12 @@ class Frame is Element {
 class Label is Element {
   construct new(value, x, y) {
     super(value, x, y, 0, 0)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   construct new(value, x, y, w, h) {
     super(value, x, y, w, h)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   init_(color) {
@@ -326,12 +326,12 @@ class Label is Element {
 class Button is Element {
   construct new(value, x, y) {
     super(value, x, y, 86, 25)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   construct new(value, x, y, w, h) {
     super(value, x, y, w, h)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   init_(color) {
@@ -367,12 +367,12 @@ class Button is Element {
 class TextBox is Element {
   construct new(value, x, y) {
     super(value, x, y)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   construct new(value, x, y, w, h) {
     super(value, x, y, w, h)
-    init_(Color.rgb(255, 255, 255))
+    init_(Color.white)
   }
 
   construct new(value, x, y, w, h, color) {
@@ -459,7 +459,7 @@ class Slider is Element {
     hitbox.w = hw
     hitbox.h = hh
 
-    _color = Color.rgb(255, 50, 50)
+    _color = Color.white
     _isDragging = false
 
     _onDrag = null
@@ -491,7 +491,7 @@ class Slider is Element {
       super.draw()
 
       Canvas.rect(x, y, w, h, _color)
-      Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.rgb(255, 255, 255))
+      Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.white)
     }
   }
 
