@@ -425,7 +425,6 @@ class TextBox is Element {
   color=(v) {_color = v}
 }
 
-// TO-DO: Fix slider drag when mouse out of slider area
 class Slider is Element {
   construct new(x, y, w, h) {
     super(50, x, y, w, h)
@@ -469,14 +468,11 @@ class Slider is Element {
     if (isEnabled) {
       super.update()
 
-      if (isFocused && !_isDragging) {
-        if (Mouse.isButtonPressed("left")) {
-          _isDragging = true
-        }
-      }
+      if (isFocused) {
+        _isDragging = Mouse.isButtonPressed("left")
+        isFocused = _isDragging
 
-      if (_isDragging) {
-        if (Mouse.isButtonPressed("left")) {
+        if (_isDragging) {
           hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
           value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
