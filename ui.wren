@@ -496,13 +496,11 @@ class Slider is Element {
   }
 
   onDrag(fn) {_onDrag = fn}
+  onDrag     {_onDrag}
 
-  onDrag=(v) {
-    _onDrag = fn
-  }
-
-  min {_min}
-  max {_max}
+  min   {_min}
+  max   {_max}
+  color {_color}
 
   min=(v) {
     value = map(hitbox.x, _minX, _maxX, v, _max).round
@@ -518,6 +516,8 @@ class Slider is Element {
     super.value = v.clamp(_min, _max)
     hitbox.x = (x - (hitbox.w / 2)) + (value / (_max - _min)) * w
   }
+
+  color=(v) {_color = v}
 }
 
 class CheckBox is Element {
