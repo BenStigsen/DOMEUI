@@ -43,7 +43,6 @@ class Rectangle {
   h=(v) {_h = v}
 }
 
-// TO-DO: Add padding
 class Element {
   construct new(x, y) {
     init_(null, x, y, 0, 0)
@@ -571,7 +570,6 @@ class CheckBox is Element {
   color=(v)   {_color = v}
 }
 
-// TO-DO: Add bind for selection change
 class RadioGroup is Frame {
   construct new() {
     super(0, 0, Canvas.width, Canvas.width)

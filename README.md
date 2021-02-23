@@ -11,6 +11,9 @@ Examples can be found **[here](./examples)**
 
 ## To-Do
 
+***NOTE: Several bindings and TextBox changes depend on future DOME versions and will only be completed later.***
+***Functions such as `onMouseRelease` and `onKeyRelease` should be exposed by DOME and shouldn't be handled by DOMEUI.***
+
 ### Specific
 - [ ] Element _(superclass to all UI elements)_
   - [ ] Focus
@@ -75,7 +78,6 @@ Examples can be found **[here](./examples)**
 
 ---
 
-- [ ] Add draw queue system
 - [ ] Add vector and list support
 - [ ] Add foreground and background colors
 - [ ] Simplify value system
