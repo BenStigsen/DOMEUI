@@ -78,7 +78,7 @@ Examples can be found **[here](./examples)**
 
 ---
 
-- [ ] Add vector and list support
+- [ ] Add rectangle and list support **(NEEDS MORE TESTING)**
 - [ ] Add foreground and background colors
 - [ ] Simplify value system
 - [ ] Simplify color system

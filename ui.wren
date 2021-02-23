@@ -4,6 +4,9 @@ import "input" for Mouse, Keyboard
 /* TO-DO:
  - Add max amount of characters to TextBox
  - Add combobox
+ - error checks
+ - testing
+ - super null check show error
 */
 
 class Theme {
@@ -31,6 +34,13 @@ class Theme {
 }
 
 class Rectangle {
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {init_(a[0], a[1], 0, 0)}
+      if (a.count == 4) {init_(a[0], a[1], a[2], a[3])}
+    }
+  }
+
   construct new(x, y, w, h) {
     init_(x, y, w, h)
   }
@@ -68,20 +78,28 @@ class Rectangle {
 }
 
 class Element {
-  construct new(x, y) {
-    init_(null, x, y, 0, 0)
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {init_(null, a[0], a[1], 0, 0)}
+      if (a.count == 4) {init_(null, a[0], a[1], a[2], a[3])}
+    }
+    
+    if (a is Rectangle) {
+      init_(null, a.x, a.y, a.w, a.h)
+    }
+    // ERROR
   }
-
-  construct new(value, x, y) {
-    init_(value, x, y, 0, 0)
-  }
-
-  construct new(x, y, w, h) {
-    init_(null, x, y, w, h)
-  }
-
-  construct new(value, x, y, w, h) {
-    init_(value, x, y, w, h)
+  
+  construct new(a, b) {
+    if (b is List) {
+      if (b.count == 2) {init_(a, b[0], b[1], 0, 0)}
+      if (b.count == 4) {init_(a, b[0], b[1], b[2], b[3])}
+    }
+    
+    if (b is Rectangle) {
+      init_(a, a.x, a.y, a.w, a.h)
+    }
+    // ERROR
   }
 
   init_(value, x, y, w, h) {
@@ -251,12 +269,18 @@ class Element {
 
 class Frame is Element {
   construct new() {
-    super(0, 0, Canvas.width, Canvas.height)
+    super([0, 0, Canvas.width, Canvas.height])
     init_()
   }
-
-  construct new(x, y, w, h) {
-    super(x, y, w, h)
+  
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {super([a[0], a[1], Canvas.width, Canvas.height])}
+      if (a.count == 4) {super(a)}
+    }
+    
+    if (a is Rectangle) {super(a)}
+    
     init_()
   }
 
@@ -309,13 +333,23 @@ class Frame is Element {
 }
 
 class Label is Element {
-  construct new(value, x, y) {
-    super(value, x, y, 0, 0)
+  construct new(a) {
+    // [x, y, ...]
+    if (a is List || a is Rectangle) {
+      super("", a)
+    }
+    // ERROR
+    
     init_(Color.white)
   }
-
-  construct new(value, x, y, w, h) {
-    super(value, x, y, w, h)
+  
+  construct new(a, b) {
+    // val, [x, y, ...]
+    if (b is List || b is Rectangle) {
+      super(a, b)
+    }
+    // ERROR
+    
     init_(Color.white)
   }
 
@@ -347,13 +381,25 @@ class Label is Element {
 
 // Button
 class Button is Element {
-  construct new(value, x, y) {
-    super(value, x, y, 86, 25)
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {super([a[0], a[1], 75, 25])}
+      if (a.count == 4) {super(a)}
+    }
+    
+    if (a is Rectangle) {super("", a)}
+    
     init_(Color.white)
   }
-
-  construct new(value, x, y, w, h) {
-    super(value, x, y, w, h)
+  
+  construct new(a, b) {
+    if (b is List) {
+      if (b.count == 2) {super(a, [b[0], b[1], 75, 25])}
+      if (b.count == 4) {super(a, b)}
+    }
+    
+    if (b is Rectangle) {super("", b)}
+    
     init_(Color.white)
   }
 
@@ -388,19 +434,28 @@ class Button is Element {
 
 // TextBox
 class TextBox is Element {
-  construct new(value, x, y) {
-    super(value, x, y)
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {super("", [a[0], a[1], 200, 100])}
+      if (a.count == 4) {super("", a)}
+    }
+    
+    if (a is Rectangle) {super("", a)}
+    
     init_(Color.white)
   }
-
-  construct new(value, x, y, w, h) {
-    super(value, x, y, w, h)
+  
+  construct new(a, b) {
+    if (b is List) {
+      if (b.count == 2) {super(a, [b[0], b[1], 200, 100])}
+      if (b.count == 4) {super(a, b)}
+    }
+    
+    if (b is Rectangle) {
+      super(a, b)
+    }
+    
     init_(Color.white)
-  }
-
-  construct new(value, x, y, w, h, color) {
-    super(value, x, y, w, h)
-    init_(color)
   }
 
   init_(color) {
@@ -448,25 +503,46 @@ class TextBox is Element {
   color=(v) {_color = v}
 }
 
+// TO-DO: Add default variables
 class Slider is Element {
-  construct new(x, y, w, h) {
-    super(50, x, y, w, h)
+  construct new(a) {
+    if (a is List || a is Rectangle) {
+      super(50, a)
+    }
+    
     init_(0, 100, 10, 20)
   }
-
-  construct new(x, y, w, h, hw, hh) {
-    super(50, x, y, w, h)
-    init_(0, 100, hw, hh)
+  
+  construct new(a, b) {
+    // val, [x, y, ...]
+    if (a is Num) {
+      super(a, b)
+      init_(0, 100, 10, 20)  
+    }
+  
+    if (b is List) {
+      if (a is List) {
+        // [val, min, max], [x, y, ...]
+        if (a.count == 3) {
+          super(a[0], b)
+          init_(a[1], a[2], 10, 20)
+        }
+        
+        // [x, y, w, h], [hw, hh]
+        if (a.count == 4) {
+          super(50, a)
+          init_(0, 100, b[0], b[1])
+        }
+      }
+    }
   }
-
-  construct new(value, min, max, x, y, w, h) {
-    super(value, x, y, w, h)
-    init_(min, max, 10, 20)
-  }
-
-  construct new(value, min, max, x, y, w, h, hw, hh) {
-    super(value, x, y, w, h)
-    init_(min, max, hw, hh)
+  
+  construct new(a, b, c) {
+    // [val, min, max], [x, y, ...], [hw, hh]
+    if (a is List) {
+      super(a[0], b)
+      init_(a[1], a[2], c[0], c[1])
+    }
   }
 
   init_(min, max, hw, hh) {
@@ -544,25 +620,30 @@ class Slider is Element {
 }
 
 class CheckBox is Element {
-  construct new(x, y) {
-    super(false, x, y, 30, 30)
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {super(false, [a[0], a[1], 30, 30])}
+      if (a.count == 4) {super(false, a)}
+    }
+    
+    if (a is Rectangle) {
+      super(false, a)
+    }
+    
+    init_(Color.white)
+  }
+  
+  construct new(a, b) {
+    if (b is List) {
+      if (b.count == 2) {super(a, [b[0], b[1], 30, 30])}
+      if (b.count == 4) {super(a, b)}
+    }
+    
+    if (b is Rectangle) {super(a, b)}
+    
     init_(Color.white)
   }
 
-  construct new(value, x, y) {
-    super(value, x, y, 30, 30)
-    init_(Color.white)
-  }
-
-  construct new(x, y, w, h) {
-    super(false, x, y, w, h)
-    init_(Color.white)
-  }
-
-  construct new(value, x, y, w, h) {
-    super(value, x, y, w, h)
-    init_(Color.white)
-  }
 
   init_(color) {
     _color = color
@@ -596,7 +677,7 @@ class CheckBox is Element {
 
 class RadioGroup is Frame {
   construct new() {
-    super(0, 0, Canvas.width, Canvas.width)
+    super([0, 0, Canvas.width, Canvas.width])
     _onSelect = null
   }
 
@@ -649,18 +730,27 @@ class RadioGroup is Frame {
 }
 
 class RadioButton is Element {
-  construct new(x, y) {
-    super(false, x, y, 30, 30)
+  construct new(a) {
+    if (a is List) {
+      if (a.count == 2) {super(false, [a[0], a[1], 30, 30])}
+      if (a.count == 4) {super(false, a)}
+    }
+    
+    if (a is Rectangle) {super(false, a)}
+    
     init_(Color.white)
   }
-
-  construct new(value, x, y) {
-    super(value, x, y, 30, 30)
-    init_(Color.white)
-  }
-
-  construct new(value, x, y, r) {
-    super(value, x, y, r, r)
+  
+  construct new(a, b) {
+    // val, [x, y, ...]
+    if (b is List) {
+      if (b.count == 2) {super(a, [b[0], b[1], 30, 30])}
+      if (b.count == 3) {super(a, [b[0], b[1], b[2], b[2]])}
+      if (b.count == 4) {super(a, b)}
+    }
+    
+    if (b is Rectangle) {super(a, b)}
+    
     init_(Color.white)
   }
 
@@ -764,8 +854,7 @@ class Dropdown is Element {
 }
 */
 
-// TO-DO: Add multiline support
-//class TextBoxMulti {}
+// TO-DO: Add multiline support (perhaps just a variable?)
 
 var Rect = Rectangle
 var Region = Rectangle
