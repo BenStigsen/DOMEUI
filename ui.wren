@@ -6,6 +6,30 @@ import "input" for Mouse, Keyboard
  - Add combobox
 */
 
+class Theme {
+  construct new(fg, bg) {
+    init_(fg, bg, null)
+  }
+  
+  construct new(fg, bg, out) {
+    init_(fg, bg, out)
+  }
+  
+  init_(fg, bg, out) {
+    _fg  = fg
+    _bg  = bg
+    _out = out
+  }
+  
+  fg  {_fg}
+  bg  {_bg}
+  out {_out}
+  
+  foreground {_fg}
+  background {_bg}
+  outline    {_out}
+}
+
 class Rectangle {
   construct new(x, y, w, h) {
     init_(x, y, w, h)
