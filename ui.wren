@@ -36,8 +36,13 @@ class Theme {
 class Rectangle {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {init_(a[0], a[1], 0, 0)}
-      if (a.count == 4) {init_(a[0], a[1], a[2], a[3])}
+      if (a.count == 2) {
+        init_(a[0], a[1], 0, 0)
+      } else if (a.count == 4) {
+        init_(a[0], a[1], a[2], a[3])
+      }
+    } else {
+      // Error
     }
   }
 
@@ -80,26 +85,32 @@ class Rectangle {
 class Element {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {init_(null, a[0], a[1], 0, 0)}
-      if (a.count == 4) {init_(null, a[0], a[1], a[2], a[3])}
-    }
-    
-    if (a is Rectangle) {
+      if (a.count == 2) {
+        init_(null, a[0], a[1], 0, 0)
+      } else if (a.count == 4) {
+        init_(null, a[0], a[1], a[2], a[3])
+      }
+    } else if (a is Rectangle) {
       init_(null, a.x, a.y, a.w, a.h)
+    } else {
+      // Error
     }
-    // ERROR
   }
   
   construct new(a, b) {
     if (b is List) {
-      if (b.count == 2) {init_(a, b[0], b[1], 0, 0)}
-      if (b.count == 4) {init_(a, b[0], b[1], b[2], b[3])}
+      if (b.count == 2) {
+        init_(a, b[0], b[1], 0, 0)
+      } else if (b.count == 4) {
+        init_(a, b[0], b[1], b[2], b[3])
+      }
+    } else if (b is Rectangle) {
+      init_(a, b.x, b.y, b.w, b.h)
+    } else {
+      // Error
+      //Fiber.abort("Vectors can only be subtracted from other points.")
     }
     
-    if (b is Rectangle) {
-      init_(a, a.x, a.y, a.w, a.h)
-    }
-    // ERROR
   }
 
   init_(value, x, y, w, h) {
@@ -275,11 +286,16 @@ class Frame is Element {
   
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {super([a[0], a[1], Canvas.width, Canvas.height])}
-      if (a.count == 4) {super(a)}
+      if (a.count == 2) {
+        super([a[0], a[1], Canvas.width, Canvas.height])
+      } else if (a.count == 4) {
+        super(a)
+      }
+    } else if (a is Rectangle) {
+      super(a)
+    } else {
+      // Error
     }
-    
-    if (a is Rectangle) {super(a)}
     
     init_()
   }
@@ -337,8 +353,9 @@ class Label is Element {
     // [x, y, ...]
     if (a is List || a is Rectangle) {
       super("", a)
+    } else {
+      // Error
     }
-    // ERROR
     
     init_(Color.white)
   }
@@ -347,8 +364,9 @@ class Label is Element {
     // val, [x, y, ...]
     if (b is List || b is Rectangle) {
       super(a, b)
+    } else {
+      // Error
     }
-    // ERROR
     
     init_(Color.white)
   }
@@ -383,22 +401,32 @@ class Label is Element {
 class Button is Element {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {super([a[0], a[1], 75, 25])}
-      if (a.count == 4) {super(a)}
+      if (a.count == 2) {
+        super([a[0], a[1], 75, 25])
+      } else if (a.count == 4) {
+        super(a)
+      }
+    } else if (a is Rectangle) {
+      super("", a)
+    } else {
+      // Error
     }
-    
-    if (a is Rectangle) {super("", a)}
     
     init_(Color.white)
   }
   
   construct new(a, b) {
     if (b is List) {
-      if (b.count == 2) {super(a, [b[0], b[1], 75, 25])}
-      if (b.count == 4) {super(a, b)}
+      if (b.count == 2) {
+        super(a, [b[0], b[1], 75, 25])
+      } else if (b.count == 4) {
+        super(a, b)
+      }
+    } else if (b is Rectangle) {
+      super("", b)
+    } else {
+      // Error
     }
-    
-    if (b is Rectangle) {super("", b)}
     
     init_(Color.white)
   }
@@ -436,23 +464,31 @@ class Button is Element {
 class TextBox is Element {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {super("", [a[0], a[1], 200, 100])}
-      if (a.count == 4) {super("", a)}
+      if (a.count == 2) {
+        super("", [a[0], a[1], 200, 100])
+      } else if (a.count == 4) {
+        super("", a)
+      }
+    } else if (a is Rectangle) {
+      super("", a)
+    } else {
+      // Error
     }
-    
-    if (a is Rectangle) {super("", a)}
     
     init_(Color.white)
   }
   
   construct new(a, b) {
     if (b is List) {
-      if (b.count == 2) {super(a, [b[0], b[1], 200, 100])}
-      if (b.count == 4) {super(a, b)}
-    }
-    
-    if (b is Rectangle) {
+      if (b.count == 2) {
+        super(a, [b[0], b[1], 200, 100])
+      } else if (b.count == 4) {
+        super(a, b)
+      }
+    } else if (b is Rectangle) {
       super(a, b)
+    } else {
+      // Error
     }
     
     init_(Color.white)
@@ -504,6 +540,7 @@ class TextBox is Element {
 }
 
 // TO-DO: Add default variables
+// TO-DO: Add rectangle support in new(a, b)
 class Slider is Element {
   construct new(a) {
     if (a is List || a is Rectangle) {
@@ -518,30 +555,32 @@ class Slider is Element {
     if (a is Num) {
       super(a, b)
       init_(0, 100, 10, 20)  
-    }
-  
-    if (b is List) {
+    } else if (b is List) {
       if (a is List) {
         // [val, min, max], [x, y, ...]
         if (a.count == 3) {
           super(a[0], b)
           init_(a[1], a[2], 10, 20)
-        }
-        
         // [x, y, w, h], [hw, hh]
-        if (a.count == 4) {
+        } else if (a.count == 4) {
           super(50, a)
           init_(0, 100, b[0], b[1])
+        } else {
+          // Error
         }
+      } else {
+        // Error
       }
     }
   }
   
   construct new(a, b, c) {
     // [val, min, max], [x, y, ...], [hw, hh]
-    if (a is List) {
+    if (a is List && b is list && c is list) {
       super(a[0], b)
       init_(a[1], a[2], c[0], c[1])
+    } else {
+      // Error
     }
   }
 
@@ -622,12 +661,15 @@ class Slider is Element {
 class CheckBox is Element {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {super(false, [a[0], a[1], 30, 30])}
-      if (a.count == 4) {super(false, a)}
-    }
-    
-    if (a is Rectangle) {
+      if (a.count == 2) {
+        super(false, [a[0], a[1], 30, 30])
+      } else if (a.count == 4) {
+        super(false, a)
+      }
+    } else if (a is Rectangle) {
       super(false, a)
+    } else {
+      // Error
     }
     
     init_(Color.white)
@@ -635,11 +677,18 @@ class CheckBox is Element {
   
   construct new(a, b) {
     if (b is List) {
-      if (b.count == 2) {super(a, [b[0], b[1], 30, 30])}
-      if (b.count == 4) {super(a, b)}
+      if (b.count == 2) {
+        super(a, [b[0], b[1], 30, 30])
+      } else if (b.count == 4) {
+        super(a, b)
+      } else {
+        // Error
+      }
+    } else if (b is Rectangle) {
+      super(a, b)
+    } else {
+      // Error
     }
-    
-    if (b is Rectangle) {super(a, b)}
     
     init_(Color.white)
   }
@@ -732,11 +781,18 @@ class RadioGroup is Frame {
 class RadioButton is Element {
   construct new(a) {
     if (a is List) {
-      if (a.count == 2) {super(false, [a[0], a[1], 30, 30])}
-      if (a.count == 4) {super(false, a)}
+      if (a.count == 2) {
+        super(false, [a[0], a[1], 30, 30])
+      } else if (a.count == 4) {
+        super(false, a)
+      } else {
+        // Error
+      }
+    } else if (a is Rectangle) {
+      super(false, a)
+    } else {
+      // Error
     }
-    
-    if (a is Rectangle) {super(false, a)}
     
     init_(Color.white)
   }
@@ -744,12 +800,20 @@ class RadioButton is Element {
   construct new(a, b) {
     // val, [x, y, ...]
     if (b is List) {
-      if (b.count == 2) {super(a, [b[0], b[1], 30, 30])}
-      if (b.count == 3) {super(a, [b[0], b[1], b[2], b[2]])}
-      if (b.count == 4) {super(a, b)}
+      // val, [x, y]
+      if (b.count == 2) {
+        super(a, [b[0], b[1], 30, 30])
+      // val, [x, y, r]
+      } else if (b.count >= 3) {
+        super(a, [b[0], b[1], b[2], b[2]])
+      } else {
+        // Error
+      }
+    } else if (b is Rectangle) {
+      super(a, b)
+    } else {
+      // Error
     }
-    
-    if (b is Rectangle) {super(a, b)}
     
     init_(Color.white)
   }
