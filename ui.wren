@@ -85,11 +85,14 @@ class Rectangle {
 class Element {
   construct new(a) {
     if (a is List) {
+      // [x, y]
       if (a.count == 2) {
         init_(null, a[0], a[1], 0, 0)
+      // [x, y, w, h]
       } else if (a.count == 4) {
         init_(null, a[0], a[1], a[2], a[3])
       }
+    // [x, y, w, h]
     } else if (a is Rectangle) {
       init_(null, a.x, a.y, a.w, a.h)
     } else {
@@ -99,11 +102,16 @@ class Element {
   
   construct new(a, b) {
     if (b is List) {
+      // val, [x, y]
       if (b.count == 2) {
         init_(a, b[0], b[1], 0, 0)
+      // val, [x, y, w, h]
       } else if (b.count == 4) {
         init_(a, b[0], b[1], b[2], b[3])
+      } else {
+        // Error
       }
+    // val, [x, y, w, h]
     } else if (b is Rectangle) {
       init_(a, b.x, b.y, b.w, b.h)
     } else {
@@ -286,11 +294,16 @@ class Frame is Element {
   
   construct new(a) {
     if (a is List) {
+      // [x, y]
       if (a.count == 2) {
         super([a[0], a[1], Canvas.width, Canvas.height])
+      // [x, y, w, h]
       } else if (a.count == 4) {
         super(a)
+      } else {
+        // Error
       }
+    // [x, y, w, h]
     } else if (a is Rectangle) {
       super(a)
     } else {
@@ -350,7 +363,7 @@ class Frame is Element {
 
 class Label is Element {
   construct new(a) {
-    // [x, y, ...]
+    // [x, y, w, h]
     if (a is List || a is Rectangle) {
       super("", a)
     } else {
@@ -401,11 +414,16 @@ class Label is Element {
 class Button is Element {
   construct new(a) {
     if (a is List) {
+      // [x, y]
       if (a.count == 2) {
         super([a[0], a[1], 75, 25])
+      // [x, y, w, h]
       } else if (a.count == 4) {
         super(a)
+      } else {
+        // Error
       }
+    // [x, y, w, h]
     } else if (a is Rectangle) {
       super("", a)
     } else {
@@ -417,11 +435,16 @@ class Button is Element {
   
   construct new(a, b) {
     if (b is List) {
+      // [x, y]
       if (b.count == 2) {
         super(a, [b[0], b[1], 75, 25])
+      // [x, y, w, h]
       } else if (b.count == 4) {
         super(a, b)
+      } else {
+        // Error
       }
+    // [x, y, w, h]
     } else if (b is Rectangle) {
       super("", b)
     } else {
@@ -464,11 +487,16 @@ class Button is Element {
 class TextBox is Element {
   construct new(a) {
     if (a is List) {
+      // [x, y]
       if (a.count == 2) {
         super("", [a[0], a[1], 200, 100])
+      // [x, y, w, h]
       } else if (a.count == 4) {
         super("", a)
+      } else {
+        // Error
       }
+    // [x, y, w, h]
     } else if (a is Rectangle) {
       super("", a)
     } else {
@@ -480,11 +508,16 @@ class TextBox is Element {
   
   construct new(a, b) {
     if (b is List) {
+      // [x, y]
       if (b.count == 2) {
         super(a, [b[0], b[1], 200, 100])
+      // [x, y, w, h]
       } else if (b.count == 4) {
         super(a, b)
+      } else {
+        // Error
       }
+    // [x, y, w, h]
     } else if (b is Rectangle) {
       super(a, b)
     } else {
@@ -551,7 +584,6 @@ class Slider is Element {
   }
   
   construct new(a, b) {
-    // val, [x, y, ...]
     if (a is Num) {
       super(a, b)
       init_(0, 100, 10, 20)  
@@ -568,8 +600,6 @@ class Slider is Element {
         } else {
           // Error
         }
-      } else {
-        // Error
       }
     }
   }
@@ -665,6 +695,8 @@ class CheckBox is Element {
         super(false, [a[0], a[1], 30, 30])
       } else if (a.count == 4) {
         super(false, a)
+      } else {
+        // Error
       }
     } else if (a is Rectangle) {
       super(false, a)
