@@ -10,8 +10,15 @@ import "input" for Mouse, Keyboard
 */
 
 class Theme {
+  construct new() {
+    if (!__fg)  {__fg  = Color.white}
+    if (!__bg)  {__bg  = Color.black}
+    if (!__out) {__out = Color.white}
+    init_(__fg, __bg, __out)
+  }
+
   construct new(fg, bg) {
-    init_(fg, bg, null)
+    init_(fg, bg, Color.white)
   }
   
   construct new(fg, bg, out) {
@@ -24,14 +31,25 @@ class Theme {
     _out = out
   }
   
-  fg  {_fg}
-  bg  {_bg}
-  out {_out}
+  // Getters
+  fg  {__fg}
+  bg  {__bg}
+  out {__out}
   
-  foreground {_fg}
-  background {_bg}
-  outline    {_out}
+  foreground {__fg}
+  background {__bg}
+  outline    {__out}
+  
+  // Setters
+  fg=(v)  {__fg = v}
+  bg=(v)  {__bg = v}
+  out=(v) {__out = v}
+  
+  foreground=(v) {__fg = v}
+  background=(v) {__bg = v}
+  outline=(v)    {__out = v}
 }
+var theme_default = Theme.new(Color.white, Color.black, Color.white)
 
 class Rectangle {
   construct new(a) {
@@ -129,6 +147,7 @@ class Element {
     _h = h
 
     _value = value
+    _theme = Theme.new()
 
     _hitbox = Rectangle.new(_x, _y, _w, _h)
 
@@ -203,6 +222,7 @@ class Element {
   w        {_w}
   h        {_h}
   value    {_value}
+  theme    {_theme}
   hitbox   {_hitbox}
   padding  {_paddingX}
   paddingX {_paddingX}
@@ -245,6 +265,7 @@ class Element {
   isAnimating {_isAnimating}
 
   value=(v)    {_value    = v}
+  theme=(v)    {_theme    = v}
   hitbox=(v)   {_hitbox   = v}
   parent=(v)   {_parent   = v}
   step=(v)     {_step     = v}
@@ -369,8 +390,6 @@ class Label is Element {
     } else {
       // Error
     }
-    
-    init_(Color.white)
   }
   
   construct new(a, b) {
@@ -380,12 +399,6 @@ class Label is Element {
     } else {
       // Error
     }
-    
-    init_(Color.white)
-  }
-
-  init_(color) {
-    _color = color
   }
 
   update() {super.update()}
@@ -397,17 +410,13 @@ class Label is Element {
       // Clip
       if (w > 0 && h > 0) {
         Canvas.clip(x, y, w, h)
-        Canvas.print(value, x, y, _color)
+        Canvas.print(value, x, y, theme.fg)
         Canvas.clip()
       } else {
-        Canvas.print(value, x, y, _color)
+        Canvas.print(value, x, y, theme.fg)
       }
     }
   }
-
-  // Variables
-  color     {_color}
-  color=(v) {_color = v}
 }
 
 // Button
@@ -429,8 +438,6 @@ class Button is Element {
     } else {
       // Error
     }
-    
-    init_(Color.white)
   }
   
   construct new(a, b) {
@@ -450,12 +457,6 @@ class Button is Element {
     } else {
       // Error
     }
-    
-    init_(Color.white)
-  }
-
-  init_(color) {
-    _color = color
   }
 
   update() {
@@ -472,15 +473,16 @@ class Button is Element {
       super.draw()
 
       Canvas.clip(x, y, w, h)
-      Canvas.rect(x, y, w, h, _color)
-      Canvas.print(value, x + paddingX, y + paddingY, _color)
+      //Canvas.rect(x, y, w, h, _color)
+      Canvas.rect(x, y, w, h, theme.out)
+      Canvas.print(value, x + paddingX, y + paddingY, theme.fg)
       Canvas.clip()
     }
   }
 
   // Variables
-  color     {_color}
-  color=(v) {_color = v}
+  //color     {_color}
+  //color=(v) {_color = v}
 }
 
 // TextBox
@@ -695,7 +697,6 @@ class Slider is Element {
     hitbox.w = hw
     hitbox.h = hh
 
-    _color = Color.white
     _isDragging = false
 
     _onDrag = null
@@ -723,8 +724,8 @@ class Slider is Element {
     if (isVisible) {
       super.draw()
 
-      Canvas.rect(x, y, w, h, _color)
-      Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, Color.white)
+      Canvas.rect(x, y, w, h, theme.out)
+      Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, theme.fg)
     }
   }
 
@@ -737,7 +738,6 @@ class Slider is Element {
 
   min   {_min}
   max   {_max}
-  color {_color}
 
   min=(v) {
     value = map(hitbox.x, _minX, _maxX, v, _max).round
@@ -753,8 +753,6 @@ class Slider is Element {
     super.value = v.clamp(_min, _max)
     hitbox.x = (x - (hitbox.w / 2)) + (value / (_max - _min)) * w
   }
-
-  color=(v) {_color = v}
 }
 
 class CheckBox is Element {
@@ -773,7 +771,7 @@ class CheckBox is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
   
   construct new(a, b) {
@@ -791,13 +789,11 @@ class CheckBox is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
 
 
-  init_(color) {
-    _color = color
-
+  init_() {
     onMouseClick {
       value = !value
     }
@@ -813,16 +809,13 @@ class CheckBox is Element {
     if (isVisible) {
       super.draw()
 
-      Canvas.rect(x, y, w, h, _color)
+      Canvas.rect(x, y, w, h, theme.out)
 
       if (value) {
-        Canvas.rectfill(x + paddingX, y + paddingY, w - (paddingX * 2), h - (paddingY * 2), _color)
+        Canvas.rectfill(x + paddingX, y + paddingY, w - (paddingX * 2), h - (paddingY * 2), theme.fg)
       }
     }
   }
-
-  color       {_color}
-  color=(v)   {_color = v}
 }
 
 class RadioGroup is Frame {
@@ -895,7 +888,7 @@ class RadioButton is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
   
   construct new(a, b) {
@@ -916,13 +909,12 @@ class RadioButton is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
 
-  init_(color) {
+  init_() {
     hitbox.x = x - (w / 2)
     hitbox.y = y - (h / 2)
-    _color = color
 
     if (__id) {
       __id = __id + 1
@@ -952,10 +944,10 @@ class RadioButton is Element {
   draw() {
     if (isVisible) {
       super.draw()
-      Canvas.circle(x, y, w / 2, _color)
+      Canvas.circle(x, y, w / 2, theme.out)
 
       if (value) {
-        Canvas.circlefill(x, y, (w / 2) - paddingX, _color)
+        Canvas.circlefill(x, y, (w / 2) - paddingX, theme.fg)
       }
     }
   }
@@ -966,10 +958,7 @@ class RadioButton is Element {
   onSelect       {_onSelect}
   onDeselect     {_onDeselect}
 
-  color {_color}
   id    {_id}
-
-  color=(v) {_color = v}
 }
 
 /*
