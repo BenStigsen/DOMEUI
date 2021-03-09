@@ -484,6 +484,8 @@ class Button is Element {
 }
 
 // TextBox
+// TO-DO: Add case conversion
+// TO-DO: Change the way symbols + letters are supported
 class TextBox is Element {
   construct new(a) {
     if (a is List) {
@@ -503,7 +505,7 @@ class TextBox is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
   
   construct new(a, b) {
@@ -524,11 +526,24 @@ class TextBox is Element {
       // Error
     }
     
-    init_(Color.white)
+    init_()
   }
-
-  init_(color) {
-    _color = color
+  
+  init_() {
+    _pos = value.count
+  
+    _allowedKeys = [
+      "a","b","c","d","e","f","g","h","i",
+      "j","k","l","m","n","o","p","q","r",
+      "s","t","u","v","w","x","y","z",
+      
+      "0","1","2","3","4","5","6","7","8",
+      "9"
+    ]
+      
+    _convertKeys = {
+      "space": " ",
+    }
   }
 
   update() {
@@ -543,13 +558,28 @@ class TextBox is Element {
           // TO-DO: Add support for space and other symbols
           if (entry.value.justPressed) {
             // TO-DO: Add uppercase/lowercase support
-            uppercase = Keyboard.isKeyDown("CapsLock")
-
-            if (Keyboard.isKeyDown("Left Shift")) {
-              uppercase = !uppercase
+            
+            if (Keyboard.isKeyDown("backspace")) {
+              deleteChar_()
+            } else {
+              if (Keyboard.isKeyDown("CapsLock")) {
+                uppercase = Keyboard.isKeyDown("CapsLock")
+              } else {
+                if (Keyboard.isKeyDown("Left Shift")) {
+                  uppercase = !uppercase
+                }
+                
+                var key = entry.key
+                
+                if (_convertKeys.containsKey(key)) {
+                  insertChar_(_convertKeys[key])
+                } else if (key == "left" || key == "right") {
+                  moveCursor_(key)
+                } else if (isCharAllowed_(key)) {
+                  insertChar_(key)
+                } 
+              }
             }
-
-            value = value + entry.key
           }
         }
       }
@@ -561,15 +591,54 @@ class TextBox is Element {
       super.draw()
 
       Canvas.clip(x, y, w, h)
-      Canvas.rect(x, y, w, h, _color)
-      Canvas.print(value, x + paddingX, y + paddingY, _color)
+      Canvas.rect(x, y, w, h, theme.out)
+      Canvas.print(value, x + paddingX, y + paddingY, theme.fg)
       Canvas.clip()
     }
   }
-
-  // Variables
-  color     {_color}
-  color=(v) {_color = v}
+  
+  isCharAllowed_(c) {
+    System.print(c)
+    for (char in _allowedKeys) {
+      if (c == char) {
+        return true
+      }
+    }
+    
+    return false
+  }
+  
+  insertChar_(c) {
+    if (_pos < value.count) {
+      value = value[0..._pos] + c + value[_pos..-1]
+    } else {
+      value = value[0..._pos] + c
+    }
+    _pos = _pos + 1
+  }
+  
+  deleteChar_() {
+    if (_pos > 0) {
+      _pos = _pos - 1
+      if (_pos < value.count) {
+        value = value[0..._pos] + value[(_pos + 1)..-1]
+      } else {
+        value = value[0..._pos]
+      }
+    }
+  }
+  
+  moveCursor_(direction) {
+    if (direction == "left") {
+      if (_pos > 0)           {_pos = _pos - 1}
+    } else {
+      if (_pos < value.count) {_pos = _pos + 1}
+    }
+  }
+  
+  allowedKeys     {_allowedKeys}
+  
+  allowedKeys=(v) {_allowedKeys = v}
 }
 
 // TO-DO: Add default variables
