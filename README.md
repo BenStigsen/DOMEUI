@@ -53,12 +53,9 @@ Examples can be found **[here](./examples)**
     - [x] ~~onDeselect~~
 - [ ] TextBox
   - [x] ~~Out-of-bounds clip~~
-  - [ ] Cursor
+  - [x] Cursor
   - [ ] Max Length
-  - [ ] Input
-    - [ ] Letters / Numbers
-    - [ ] Symbols
-    - [ ] Special keys (capslock, shift, etc...)
+  - [x] Input _(until keycodes or UTF-8 characters are exposed from C, the user will have to supply their own list of allowed keys)._
 - [ ] Multiline TextBox
   - [ ] Cursor
   - [ ] Max Length
