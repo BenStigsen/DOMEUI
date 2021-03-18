@@ -460,6 +460,7 @@ class TextBox is Element {
   
   init_() {
     _pos = value.count
+    _max = -1
   
     _allowedKeys = [
       "a","b","c","d","e","f","g","h","i",
@@ -506,7 +507,7 @@ class TextBox is Element {
                   moveCursor_(key)
                 } else if (isCharAllowed_(key)) {
                   insertChar_(key)
-                } 
+                }
               }
             }
           }
@@ -527,7 +528,6 @@ class TextBox is Element {
   }
   
   isCharAllowed_(c) {
-    System.print(c)
     for (char in _allowedKeys) {
       if (c == char) {
         return true
@@ -538,12 +538,23 @@ class TextBox is Element {
   }
   
   insertChar_(c) {
-    if (_pos < value.count) {
-      value = value[0..._pos] + c + value[_pos..-1]
+    if (_max != -1) {
+      if (value.count < _max) {
+        if (_pos < value.count) {
+          value = value[0..._pos] + c + value[_pos..-1]
+        } else {
+          value = value[0..._pos] + c
+        }
+        _pos = _pos + 1
+      }
     } else {
-      value = value[0..._pos] + c
+      if (_pos < value.count) {
+        value = value[0..._pos] + c + value[_pos..-1]
+      } else {
+        value = value[0..._pos] + c
+      }
+      _pos = _pos + 1
     }
-    _pos = _pos + 1
   }
   
   deleteChar_() {
@@ -565,8 +576,10 @@ class TextBox is Element {
     }
   }
   
-  allowedKeys     {_allowedKeys}
+  max         {_max}
+  allowedKeys {_allowedKeys}
   
+  max=(v)         {_max = v}
   allowedKeys=(v) {_allowedKeys = v}
 }
 
