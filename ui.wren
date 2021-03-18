@@ -1,5 +1,6 @@
 import "graphics" for Canvas, Color
 import "input" for Mouse, Keyboard
+import "math" for Vector
 
 /* TO-DO:
  - Add max amount of characters to TextBox
@@ -59,11 +60,17 @@ class Rectangle {
       } else if (a.count == 4) {
         init_(a[0], a[1], a[2], a[3])
       }
+    } else if (a is Vector) {
+      init_(a.x, a.y, a.z, a.w)
     } else {
       // Error
     }
   }
-
+  
+  construct new(x, y) {
+    init_(x, y, 0, 0)
+  }
+  
   construct new(x, y, w, h) {
     init_(x, y, w, h)
   }
@@ -103,40 +110,38 @@ class Rectangle {
 class Element {
   construct new(a) {
     if (a is List) {
-      // [x, y]
       if (a.count == 2) {
-        init_(null, a[0], a[1], 0, 0)
-      // [x, y, w, h]
+        init_("", a[0], a[1], 0, 0)
       } else if (a.count == 4) {
-        init_(null, a[0], a[1], a[2], a[3])
+        init_("", a[0], a[1], a[2], a[3])
+      } else {
+        // Error
       }
-    // [x, y, w, h]
     } else if (a is Rectangle) {
-      init_(null, a.x, a.y, a.w, a.h)
+      init_("", a.x, a.y, a.w, a.h)
+    } else if (a is Vector) {
+      init_("", a.x, a.y, a.z, a.w)
     } else {
-      // Error
+      init_(a, 0, 0, 0, 0)
     }
   }
   
   construct new(a, b) {
     if (b is List) {
-      // val, [x, y]
       if (b.count == 2) {
         init_(a, b[0], b[1], 0, 0)
-      // val, [x, y, w, h]
       } else if (b.count == 4) {
         init_(a, b[0], b[1], b[2], b[3])
       } else {
         // Error
       }
-    // val, [x, y, w, h]
     } else if (b is Rectangle) {
       init_(a, b.x, b.y, b.w, b.h)
+    } else if (b is Vector) {
+      init_(a, b.x, b.y, b.z, b.w)
     } else {
       // Error
-      //Fiber.abort("Vectors can only be subtracted from other points.")
     }
-    
   }
 
   init_(value, x, y, w, h) {
@@ -155,7 +160,7 @@ class Element {
     _paddingY = 5.min(h)
 
     _parent = null
-    _step = 0
+    _step   = 0
 
     // Booleans
     _isFocused   = false
@@ -264,6 +269,10 @@ class Element {
   isVisible   {_isVisible}
   isAnimating {_isAnimating}
 
+  x=(v)        {_x        = v}
+  y=(v)        {_y        = v}
+  w=(v)        {_w        = v}
+  h=(v)        {_h        = v}
   value=(v)    {_value    = v}
   theme=(v)    {_theme    = v}
   hitbox=(v)   {_hitbox   = v}
@@ -314,23 +323,7 @@ class Frame is Element {
   }
   
   construct new(a) {
-    if (a is List) {
-      // [x, y]
-      if (a.count == 2) {
-        super([a[0], a[1], Canvas.width, Canvas.height])
-      // [x, y, w, h]
-      } else if (a.count == 4) {
-        super(a)
-      } else {
-        // Error
-      }
-    // [x, y, w, h]
-    } else if (a is Rectangle) {
-      super(a)
-    } else {
-      // Error
-    }
-    
+    super(a)
     init_()
   }
 
@@ -379,26 +372,22 @@ class Frame is Element {
   }
 
   children     {_children}
-  children=(v) {_children}
+  children=(v) {
+    _children = v
+    
+    for (child in _children) {
+      child.parent = this
+    }
+  }
 }
 
 class Label is Element {
   construct new(a) {
-    // [x, y, w, h]
-    if (a is List || a is Rectangle) {
-      super("", a)
-    } else {
-      // Error
-    }
+    super(a)
   }
   
   construct new(a, b) {
-    // val, [x, y, ...]
-    if (b is List || b is Rectangle) {
-      super(a, b)
-    } else {
-      // Error
-    }
+    super(a, b)
   }
 
   update() {super.update()}
@@ -422,41 +411,11 @@ class Label is Element {
 // Button
 class Button is Element {
   construct new(a) {
-    if (a is List) {
-      // [x, y]
-      if (a.count == 2) {
-        super([a[0], a[1], 75, 25])
-      // [x, y, w, h]
-      } else if (a.count == 4) {
-        super(a)
-      } else {
-        // Error
-      }
-    // [x, y, w, h]
-    } else if (a is Rectangle) {
-      super("", a)
-    } else {
-      // Error
-    }
+    super(a)
   }
   
   construct new(a, b) {
-    if (b is List) {
-      // [x, y]
-      if (b.count == 2) {
-        super(a, [b[0], b[1], 75, 25])
-      // [x, y, w, h]
-      } else if (b.count == 4) {
-        super(a, b)
-      } else {
-        // Error
-      }
-    // [x, y, w, h]
-    } else if (b is Rectangle) {
-      super("", b)
-    } else {
-      // Error
-    }
+    super(a, b)
   }
 
   update() {
@@ -490,44 +449,12 @@ class Button is Element {
 // TO-DO: Change the way symbols + letters are supported
 class TextBox is Element {
   construct new(a) {
-    if (a is List) {
-      // [x, y]
-      if (a.count == 2) {
-        super("", [a[0], a[1], 200, 100])
-      // [x, y, w, h]
-      } else if (a.count == 4) {
-        super("", a)
-      } else {
-        // Error
-      }
-    // [x, y, w, h]
-    } else if (a is Rectangle) {
-      super("", a)
-    } else {
-      // Error
-    }
-    
+    super(a)
     init_()
   }
   
   construct new(a, b) {
-    if (b is List) {
-      // [x, y]
-      if (b.count == 2) {
-        super(a, [b[0], b[1], 200, 100])
-      // [x, y, w, h]
-      } else if (b.count == 4) {
-        super(a, b)
-      } else {
-        // Error
-      }
-    // [x, y, w, h]
-    } else if (b is Rectangle) {
-      super(a, b)
-    } else {
-      // Error
-    }
-    
+    super(a, b)
     init_()
   }
   
@@ -646,43 +573,23 @@ class TextBox is Element {
 // TO-DO: Add default variables
 // TO-DO: Add rectangle support in new(a, b)
 class Slider is Element {
+  construct new() {
+    super(50, Vector.new(0, 0, 100, 20))
+    init_(0, 100, 10, 20)
+  }
+
   construct new(a) {
-    if (a is List || a is Rectangle) {
+    if (a is Num) {
+      super(a, Vector.new(0, 0, 100, 20))
+    } else {
       super(50, a)
     }
-    
     init_(0, 100, 10, 20)
   }
   
   construct new(a, b) {
-    if (a is Num) {
-      super(a, b)
-      init_(0, 100, 10, 20)  
-    } else if (b is List) {
-      if (a is List) {
-        // [val, min, max], [x, y, ...]
-        if (a.count == 3) {
-          super(a[0], b)
-          init_(a[1], a[2], 10, 20)
-        // [x, y, w, h], [hw, hh]
-        } else if (a.count == 4) {
-          super(50, a)
-          init_(0, 100, b[0], b[1])
-        } else {
-          // Error
-        }
-      }
-    }
-  }
-  
-  construct new(a, b, c) {
-    // [val, min, max], [x, y, ...], [hw, hh]
-    if (a is List && b is list && c is list) {
-      super(a[0], b)
-      init_(a[1], a[2], c[0], c[1])
-    } else {
-      // Error
-    }
+    super(a, b)
+    init_(0, 100, 10, 20)
   }
 
   init_(min, max, hw, hh) {
@@ -757,41 +664,18 @@ class Slider is Element {
 
 class CheckBox is Element {
   construct new(a) {
-    if (a is List) {
-      if (a.count == 2) {
-        super(false, [a[0], a[1], 30, 30])
-      } else if (a.count == 4) {
-        super(false, a)
-      } else {
-        // Error
-      }
-    } else if (a is Rectangle) {
-      super(false, a)
+    if (a is Bool) {
+      super(a, Rectangle.new(0, 0, 20, 20))
     } else {
-      // Error
+      super(false, a)
     }
-    
     init_()
   }
   
   construct new(a, b) {
-    if (b is List) {
-      if (b.count == 2) {
-        super(a, [b[0], b[1], 30, 30])
-      } else if (b.count == 4) {
-        super(a, b)
-      } else {
-        // Error
-      }
-    } else if (b is Rectangle) {
-      super(a, b)
-    } else {
-      // Error
-    }
-    
+    super(a, b)
     init_()
   }
-
 
   init_() {
     onMouseClick {
@@ -822,6 +706,10 @@ class RadioGroup is Frame {
   construct new() {
     super([0, 0, Canvas.width, Canvas.width])
     _onSelect = null
+  }
+  
+  construct new(a) {
+    super(a)
   }
 
   update() {
@@ -874,41 +762,17 @@ class RadioGroup is Frame {
 
 class RadioButton is Element {
   construct new(a) {
-    if (a is List) {
-      if (a.count == 2) {
-        super(false, [a[0], a[1], 30, 30])
-      } else if (a.count == 4) {
-        super(false, a)
-      } else {
-        // Error
-      }
-    } else if (a is Rectangle) {
-      super(false, a)
+    if (a is Bool) {
+      super(a, Rectangle.new(20, 20, 25, 25))
     } else {
-      // Error
+      super(false, a)
     }
     
     init_()
   }
   
   construct new(a, b) {
-    // val, [x, y, ...]
-    if (b is List) {
-      // val, [x, y]
-      if (b.count == 2) {
-        super(a, [b[0], b[1], 30, 30])
-      // val, [x, y, r]
-      } else if (b.count >= 3) {
-        super(a, [b[0], b[1], b[2], b[2]])
-      } else {
-        // Error
-      }
-    } else if (b is Rectangle) {
-      super(a, b)
-    } else {
-      // Error
-    }
-    
+    super(a, b)
     init_()
   }
 
