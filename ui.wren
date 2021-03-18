@@ -574,13 +574,13 @@ class TextBox is Element {
 // TO-DO: Add rectangle support in new(a, b)
 class Slider is Element {
   construct new() {
-    super(50, Vector.new(0, 0, 100, 20))
+    super(50, [0, 0, 100, 20])
     init_(0, 100, 10, 20)
   }
 
   construct new(a) {
     if (a is Num) {
-      super(a, Vector.new(0, 0, 100, 20))
+      super(a, [0, 0, 100, 20])
     } else {
       super(50, a)
     }
@@ -665,7 +665,7 @@ class Slider is Element {
 class CheckBox is Element {
   construct new(a) {
     if (a is Bool) {
-      super(a, Rectangle.new(0, 0, 20, 20))
+      super(a, [0, 0, 20, 20])
     } else {
       super(false, a)
     }
@@ -763,7 +763,7 @@ class RadioGroup is Frame {
 class RadioButton is Element {
   construct new(a) {
     if (a is Bool) {
-      super(a, Rectangle.new(20, 20, 25, 25))
+      super(a, [20, 20, 25, 25])
     } else {
       super(false, a)
     }
