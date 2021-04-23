@@ -469,16 +469,17 @@ class TextBox is Element {
 
       if (isFocused) {
         if (Keyboard.text.count > 0) {
-          if (max < 0 || value.count < max) {
-            value = value + Keyboard.text
-            System.print(value)
-            _pos = _pos + 1
-          }
-        } else if (Keyboard["backspace"].justPressed && _pos > 0) {
-          deleteChar_()
+          insert_(Keyboard.text)
         } else if (Keyboard["return"].justPressed && _pos > 0) {
-          value = value + "\n"
-          _pos = _pos + 1
+          insert_("\n")
+        } else if (Keyboard["backspace"].justPressed && _pos > 0) {
+          delete_()
+        } else {
+          if (Keyboard["left"].justPressed) {
+            moveCursor_(-1)
+          } else if (Keyboard["right"].justPressed) {
+            moveCursor_(1)
+          }
         }
       }
     }
@@ -495,22 +496,45 @@ class TextBox is Element {
     }
   }
   
-  deleteChar_() {
+  delete_() {
     if (_pos > 0) {
-      _pos = _pos - 1
-      if (_pos < value.count) {
-        value = value[0..._pos] + value[(_pos + 1)..-1]
-      } else {
-        value = value[0..._pos]
+      var codePoints = value.codePoints
+      codePoints = codePoints.take(_pos-1).toList + codePoints.skip(_pos).toList
+      
+      value = ""
+      for (point in codePoints) {
+        value = value + String.fromCodePoint(point)
       }
+      
+      _pos = _pos - 1
+    }
+  }
+  
+  insert_(text) {
+    var result = ""
+    var length = text.codePoints.count
+    var count  = length
+    
+    if (_max != -1) {
+      count = _max - (value.codePoints.count + (count - 1))
+    }
+    
+    if (count > 0) {
+      for(point in value.codePoints.take(_pos))  result = result + String.fromCodePoint(point)
+      for(point in text.codePoints.take(count))  result = result + String.fromCodePoint(point)
+      for(point in value.codePoints.skip(_pos))  result = result + String.fromCodePoint(point)
+      
+      value = result
+      
+      _pos = _pos + length
     }
   }
   
   moveCursor_(direction) {
-    if (direction == "left") {
-      if (_pos > 0)           {_pos = _pos - 1}
+    if (direction >= 0) {
+      if (_pos + direction <= value.count) {_pos = _pos + direction}
     } else {
-      if (_pos < value.count) {_pos = _pos + 1}
+      if (_pos + direction > 0)            {_pos = _pos + direction}
     }
   }
   
