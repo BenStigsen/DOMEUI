@@ -11,7 +11,7 @@ Examples can be found **[here](./examples)**
 
 ## To-Do
 
-***NOTE: Several bindings and TextBox changes depend on future DOME versions and will only be completed later.***
+***NOTE: Several bindings depend on future DOME versions and will only be completed later.***
 ***Functions such as `onMouseRelease` and `onKeyRelease` should be exposed by DOME and shouldn't be handled by DOMEUI.***
 
 ### Specific
@@ -53,17 +53,21 @@ Examples can be found **[here](./examples)**
     - [x] ~~onDeselect~~
 - [ ] TextBox
   - [x] ~~Out-of-bounds clip~~
-  - [x] Cursor
-  - [ ] Max Length
-  - [x] Input _(until keycodes or UTF-8 characters are exposed from C, the user will have to supply their own list of allowed keys)._
-- [ ] Multiline TextBox
   - [ ] Cursor
-  - [ ] Max Length
-  - [ ] Input
-    - [ ] Letters / Numbers
-    - [ ] Symbols
-    - [ ] Special keys (capslock, shift, etc...)
+    - [ ] Draw
+    - [x] Position
+  - [x] Max Length
+  - [x] Input
+- [ ] Multiline TextBox **(IN-PROGRESS)**
+  - [x] ~~Out-of-bounds clip~~
+  - [ ] Cursor
+    - [ ] Draw
+    - [x] Position
+  - [x] Max Length
+  - [x] Input
   - [ ] Text wrapping
+    - [x] Newline Support
+    - [ ] Automatic Wrapping
 - [ ] Slider
   - [ ] Increments / Decimal rounding
   - [x] ~~Value scaling~~
