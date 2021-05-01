@@ -64,11 +64,13 @@ class Rectangle {
         init_(a[0], a[1], 0, 0)
       } else if (a.count == 4) {
         init_(a[0], a[1], a[2], a[3])
+      } else {
+        Fiber.abort("Rectangle.new(_) List should contain 2 [x, y] or 4 [x, y, w, h] values")
       }
     } else if (a is Vector) {
       init_(a.x, a.y, a.z, a.w)
     } else {
-      // Error
+      Fiber.abort("Rectangle.new(_) requires argument to be of type Vector or List")
     }
   }
   
@@ -129,7 +131,7 @@ class Element {
       } else if (a.count == 4) {
         init_("", a[0], a[1], a[2], a[3])
       } else {
-        // Error
+        Fiber.abort("Rectangle.new(_) List should contain 2 [x, y] or 4 [x, y, w, h] values")
       }
     } else if (a is Rectangle) {
       init_("", a.x, a.y, a.w, a.h)
@@ -147,14 +149,14 @@ class Element {
       } else if (b.count == 4) {
         init_(a, b[0], b[1], b[2], b[3])
       } else {
-        // Error
+        Fiber.abort("Element.new(_) List should contain 2 [x, y] or 4 [x, y, w, h] values")
       }
     } else if (b is Rectangle) {
       init_(a, b.x, b.y, b.w, b.h)
     } else if (b is Vector) {
       init_(a, b.x, b.y, b.z, b.w)
     } else {
-      // Error
+      Fiber.abort("Element.new(_) requires argument to be of type List, Vector or Rectangle")
     }
   }
 
@@ -550,9 +552,9 @@ class TextBox is Element {
     }
     
     if (count > 0) {
-      for(point in value.codePoints.take(_pos))  result = result + String.fromCodePoint(point)
-      for(point in text.codePoints.take(count))  result = result + String.fromCodePoint(point)
-      for(point in value.codePoints.skip(_pos))  result = result + String.fromCodePoint(point)
+      for(point in value.codePoints.take(_pos)) result = result + String.fromCodePoint(point)
+      for(point in text.codePoints.take(count)) result = result + String.fromCodePoint(point)
+      for(point in value.codePoints.skip(_pos)) result = result + String.fromCodePoint(point)
       
       value = result
       
@@ -625,7 +627,7 @@ class Slider is Element {
         isFocused = _isDragging
 
         if (_isDragging) {
-          hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX, _maxX)
+          hitbox.x = (Mouse.pos.x - (hitbox.w / 2)).clamp(_minX + (hitbox.w / 2), _maxX - (hitbox.w / 2))
           value = map(hitbox.x, _minX, _maxX, _min, _max).round
 
           if (_onDrag) {_onDrag.call()}
@@ -829,7 +831,7 @@ class RadioButton is Element {
   onSelect       {_onSelect}
   onDeselect     {_onDeselect}
 
-  id    {_id}
+  id {_id}
 }
 
 /*
