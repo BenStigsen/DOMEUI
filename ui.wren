@@ -464,7 +464,7 @@ class Button is Element {
       super.draw()
 
       Canvas.clip(x, y, w, h)
-      //Canvas.rect(x, y, w, h, _color)
+      Canvas.rectfill(x, y, w, h, theme.bg)
       Canvas.rect(x, y, w, h, theme.out)
       Canvas.print(value, x + paddingX, y + paddingY, theme.fg)
       Canvas.clip()
@@ -522,6 +522,7 @@ class TextBox is Element {
       super.draw()
 
       Canvas.clip(x, y, w, h)
+      Canvas.rectfill(x, y, w, h, theme.bg)
       Canvas.rect(x, y, w, h, theme.out)
       Canvas.print(value, x + paddingX, y + paddingY, theme.fg)
       Canvas.clip()
@@ -640,6 +641,7 @@ class Slider is Element {
     if (isVisible) {
       super.draw()
 
+      Canvas.rectfill(x, y, w, h, theme.bg)
       Canvas.rect(x, y, w, h, theme.out)
       Canvas.rectfill(hitbox.x, hitbox.y, hitbox.w, hitbox.h, theme.fg)
     }
@@ -702,6 +704,7 @@ class CheckBox is Element {
     if (isVisible) {
       super.draw()
 
+      Canvas.rectfill(x, y, w, h, theme.bg)
       Canvas.rect(x, y, w, h, theme.out)
 
       if (value) {
@@ -817,6 +820,7 @@ class RadioButton is Element {
   draw() {
     if (isVisible) {
       super.draw()
+      Canvas.circlefill(x, y, w / 2, theme.bg)
       Canvas.circle(x, y, w / 2, theme.out)
 
       if (value) {
