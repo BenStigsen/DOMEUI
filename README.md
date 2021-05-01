@@ -79,10 +79,10 @@ Examples can be found **[here](./examples)**
 
 ---
 
+- [ ] Add draw queue
 - [ ] Add rectangle, list and vector support **(NEEDS MORE TESTING)**
-- [ ] Add foreground and background colors
-- [ ] Simplify value system
 - [ ] Simplify color system
+- [ ] Simplify value system
 - [ ] Simplify clipping system
 
 ---

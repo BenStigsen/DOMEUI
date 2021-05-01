@@ -384,6 +384,7 @@ class Frame is Element {
   }
 
   children     {_children}
+  
   children=(v) {
     _children = v
     
@@ -469,6 +470,8 @@ class Button is Element {
 }
 
 // TextBox
+Keyboard.handleText = true
+
 class TextBox is Element {
   construct new(a) {
     super(a)
