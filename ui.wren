@@ -3,11 +3,8 @@ import "input" for Mouse, Keyboard
 import "math" for Vector
 
 /* TO-DO:
- - Add max amount of characters to TextBox
  - Add combobox
- - error checks
- - testing
- - super null check show error
+ - Testing
 */
 
 class Theme {
@@ -88,7 +85,6 @@ class Rectangle {
     _w = w
     _h = h
   }
-
 
   pointInRectangle(x, y) {
     if (x > _x && x < (_x + _w)) {
@@ -470,14 +466,9 @@ class Button is Element {
       Canvas.clip()
     }
   }
-
-  // Variables
-  //color     {_color}
-  //color=(v) {_color = v}
 }
 
 // TextBox
-// TO-DO: Change newline support depending on multiline or not (TextBox.multiline = true)
 class TextBox is Element {
   construct new(a) {
     super(a)
@@ -492,7 +483,7 @@ class TextBox is Element {
   init_() {
     _pos = value.count
     _max = -1
-    _multiline = false
+    _multiline = true
   }
 
   update() {
@@ -521,9 +512,9 @@ class TextBox is Element {
     if (isVisible) {
       super.draw()
 
-      Canvas.clip(x, y, w, h)
       Canvas.rectfill(x, y, w, h, theme.bg)
       Canvas.rect(x, y, w, h, theme.out)
+      Canvas.clip(x, y, w - paddingX, h - paddingY)
       Canvas.print(value, x + paddingX, y + paddingY, theme.fg)
       Canvas.clip()
     }
@@ -580,8 +571,7 @@ class TextBox is Element {
   multiline=(v)   {_multiline = v}
 }
 
-// TO-DO: Add default variables
-// TO-DO: Add rectangle support in new(a, b)
+// Slider
 class Slider is Element {
   construct new() {
     super(50, [0, 0, 100, 20])
@@ -673,6 +663,7 @@ class Slider is Element {
   }
 }
 
+// CheckBox
 class CheckBox is Element {
   construct new(a) {
     if (a is Bool) {
@@ -714,6 +705,7 @@ class CheckBox is Element {
   }
 }
 
+// RadioGroup
 class RadioGroup is Frame {
   construct new() {
     super([0, 0, Canvas.width, Canvas.width])
@@ -772,6 +764,7 @@ class RadioGroup is Frame {
   onSelect     {_onSelect}
 }
 
+// RadioButton
 class RadioButton is Element {
   construct new(a) {
     if (a is Bool) {
@@ -884,8 +877,6 @@ class Dropdown is Element {
   options=(v)  {_options = v}
 }
 */
-
-// TO-DO: Add multiline support (perhaps just a variable?)
 
 var Rect = Rectangle
 var Region = Rectangle
