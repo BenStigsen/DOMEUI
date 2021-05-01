@@ -1,4 +1,4 @@
-import "graphics" for Canvas, Color
+import "graphics" for Font, Canvas, Color
 import "input" for Mouse, Keyboard
 import "math" for Vector
 
@@ -12,9 +12,6 @@ import "math" for Vector
 
 class Theme {
   construct new() {
-    if (!__fg)  {__fg  = Color.white}
-    if (!__bg)  {__bg  = Color.black}
-    if (!__out) {__out = Color.white}
     init_(__fg, __bg, __out)
   }
 
@@ -26,6 +23,12 @@ class Theme {
     init_(fg, bg, out)
   }
   
+  static init() {
+    __fg  = Color.white
+    __bg  = Color.black
+    __out = Color.white
+  }
+  
   init_(fg, bg, out) {
     _fg  = fg
     _bg  = bg
@@ -33,24 +36,26 @@ class Theme {
   }
   
   // Getters
-  fg  {__fg}
-  bg  {__bg}
-  out {__out}
+  fg         {_fg}
+  bg         {_bg}
+  out        {_out}
   
-  foreground {__fg}
-  background {__bg}
-  outline    {__out}
+  static fg  {__fg}
+  static bg  {__bg}
+  static out {__out}
   
   // Setters
-  fg=(v)  {__fg = v}
-  bg=(v)  {__bg = v}
-  out=(v) {__out = v}
+  fg=(v)         {_fg  = v}
+  bg=(v)         {_bg  = v}
+  out=(v)        {_out = v}
   
-  foreground=(v) {__fg = v}
-  background=(v) {__bg = v}
-  outline=(v)    {__out = v}
+  static fg=(v)  {__fg  = v}
+  static bg=(v)  {__bg  = v}
+  static out=(v) {__out = v}
 }
-var theme_default = Theme.new(Color.white, Color.black, Color.white)
+
+// Initialize default Theme values
+Theme.init()
 
 class Rectangle {
   construct new(a) {
@@ -82,6 +87,7 @@ class Rectangle {
     _h = h
   }
 
+
   pointInRectangle(x, y) {
     if (x > _x && x < (_x + _w)) {
       if (y > _y && y < (_y + _h)) {
@@ -92,8 +98,16 @@ class Rectangle {
     return false
   }
 
+  toList {
+    return [_x, _y, _w, _h]
+  }
+
+  toVector {
+    return Vector.new(_x, _y, _w, _h)
+  }
+  
   toString {
-    return "(%(x), %(y), %(w), %(h))"
+    return "(%(_x), %(_y), %(_w), %(_h))"
   }
 
   x {_x}
@@ -384,10 +398,26 @@ class Frame is Element {
 class Label is Element {
   construct new(a) {
     super(a)
+    init_()
   }
   
   construct new(a, b) {
     super(a, b)
+    init_()
+  }
+
+  // --------------------------
+  // TO-DO: Get current font and add hitbox dimensions to that bad boy
+  // --------------------------
+  init_() {
+    /*
+    var dimensions = Font[Canvas.font].getArea(value)
+    
+    w = dimensions.x
+    h = dimensions.y
+
+    hitbox = Rectangle.new(x, y, dimensions.x, dimensions.y)
+    */
   }
 
   update() {super.update()}
@@ -445,8 +475,7 @@ class Button is Element {
 }
 
 // TextBox
-// TO-DO: Add case conversion
-// TO-DO: Change the way symbols + letters are supported
+// TO-DO: Change newline support depending on multiline or not (TextBox.multiline = true)
 class TextBox is Element {
   construct new(a) {
     super(a)
@@ -461,6 +490,7 @@ class TextBox is Element {
   init_() {
     _pos = value.count
     _max = -1
+    _multiline = false
   }
 
   update() {
@@ -470,9 +500,9 @@ class TextBox is Element {
       if (isFocused) {
         if (Keyboard.text.count > 0) {
           insert_(Keyboard.text)
-        } else if (Keyboard["return"].justPressed && _pos > 0) {
+        } else if (Keyboard["return"].justPressed && _multiline) {
           insert_("\n")
-        } else if (Keyboard["backspace"].justPressed && _pos > 0) {
+        } else if (Keyboard["backspace"].justPressed) {
           delete_()
         } else {
           if (Keyboard["left"].justPressed) {
@@ -540,9 +570,11 @@ class TextBox is Element {
   
   max         {_max}
   allowedKeys {_allowedKeys}
+  multiline   {_multiline}
   
   max=(v)         {_max = v}
   allowedKeys=(v) {_allowedKeys = v}
+  multiline=(v)   {_multiline = v}
 }
 
 // TO-DO: Add default variables
