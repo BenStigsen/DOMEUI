@@ -55,18 +55,18 @@ Examples can be found **[here](./examples)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
     - [ ] Draw
-    - [x] Position
-  - [x] Max Length
-  - [x] Input
+    - [x] ~~Position~~
+  - [x] ~~Max Length~~
+  - [x] ~~Input~~
 - [ ] Multiline TextBox **(IN-PROGRESS)**
   - [x] ~~Out-of-bounds clip~~
   - [ ] Cursor
     - [ ] Draw
-    - [x] Position
-  - [x] Max Length
-  - [x] Input
+    - [x] ~~Position~~
+  - [x] ~~Max Length~~
+  - [x] ~~Input~~
   - [ ] Text wrapping
-    - [x] Newline Support
+    - [x] ~~Newline Support~~
     - [ ] Automatic Wrapping
 - [ ] Slider
   - [ ] Increments / Decimal rounding
