@@ -34,6 +34,7 @@ Examples can be found **[here](./examples)**
     - [x] ~~onInvisible~~
     - [x] ~~onEnable~~
     - [x] ~~onDisable~~
+    - [x] ~~onValueUpdate~~
 - [x] ~~Frame~~
   - [x] ~~Children~~
 - [ ] Label

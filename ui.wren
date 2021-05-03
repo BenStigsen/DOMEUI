@@ -193,6 +193,7 @@ class Element {
     _onDraw          = null
     _onAnimation     = null
     _onAnimationDone = null
+    _onValueUpdate   = null
   }
 
   update() {
@@ -204,10 +205,10 @@ class Element {
       var pos = Mouse.position
 
       if (_hitbox.pointInRectangle(pos.x, pos.y)) {
-          isFocused = true
+        isFocused = true
 
-          // Bind: onMouseClick
-          if (_onMouseClick) {onMouseClick.call()}
+        // Bind: onMouseClick
+        if (_onMouseClick) {onMouseClick.call()}
       } else {
         isFocused = false
       }
@@ -260,6 +261,7 @@ class Element {
   onDraw(fn)          {_onDraw          = fn}
   onAnimation(fn)     {_onAnimation     = fn}
   onAnimationDone(fn) {_onAnimationDone = fn}
+  onValueUpdate(fn)   {_onValueUpdate   = fn}
 
   // Variables
   onMouseClick    {_onMouseClick}
@@ -274,6 +276,7 @@ class Element {
   onDraw          {_onDraw}
   onAnimation     {_onAnimation}
   onAnimationDone {_onAnimationDone}
+  onValueUpdate   {_onValueUpdate}
 
   // Booleans
   isFocused   {_isFocused}
@@ -285,7 +288,6 @@ class Element {
   y=(v)        {_y        = v}
   w=(v)        {_w        = v}
   h=(v)        {_h        = v}
-  value=(v)    {_value    = v}
   theme=(v)    {_theme    = v}
   hitbox=(v)   {_hitbox   = v}
   parent=(v)   {_parent   = v}
@@ -293,6 +295,12 @@ class Element {
   paddingX=(v) {_paddingX = v.min(w)}
   paddingY=(v) {_paddingY = v.min(h)}
 
+  value=(v) {
+    _value = v
+    
+    if (_onValueUpdate) {_onValueUpdate.call()}
+  }
+  
   padding=(v) {
     _paddingX = v
     _paddingY = v
@@ -383,7 +391,7 @@ class Frame is Element {
     }
   }
 
-  children     {_children}
+  children {_children}
   
   children=(v) {
     _children = v
